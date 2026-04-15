@@ -1,0 +1,9 @@
+// Grid（v-row / v-col）的 Confucian 樣式微調
+//
+// - 橫縱 gap：由 blueprint 的 VRow defaults `density: "comfortable"` 設定
+//   （Vuetify 自行同步 col flex-basis 的扣除量，不需手動覆蓋 CSS）
+// - row 與 row 之間：Vuetify 沒提供自動間距，這裡補 16px
+
+.v-row + .v-row {
+	margin-top: 16px;
+}

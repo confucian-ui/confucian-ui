@@ -1,0 +1,22 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"declarationDir": ".dist-staging/types",
+		"rootDir": "src",
+		"noEmit": false,
+		"composite": false
+	},
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.vue"
+	],
+	"exclude": [
+		"dist",
+		".dist-staging",
+		"node_modules",
+		"**/*.test.ts",
+		"**/*.spec.ts"
+	]
+}

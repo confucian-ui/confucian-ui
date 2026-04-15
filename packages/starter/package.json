@@ -1,0 +1,30 @@
+{
+	"name": "confucian-starter",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"author": "Mu-Tsun Tsai <don.m.t.tsai@gmail.com> (https://github.com/MuTsunTsai)",
+	"description": "Confucian 主題的乾淨起始範本。",
+	"scripts": {
+		"build": "rsbuild build",
+		"dev": "rsbuild dev",
+		"preview": "rsbuild preview",
+		"typecheck": "vue-tsc --noEmit"
+	},
+	"dependencies": {
+		"@confucian-ui/vuetify": "workspace:*",
+		"@phosphor-icons/vue": "^2.2.1",
+		"vue": "^3.5.32",
+		"vue-router": "^5.0.4",
+		"vuetify": "^4.0.5"
+	},
+	"devDependencies": {
+		"@rsbuild/core": "^1.7.5",
+		"@rsbuild/plugin-sass": "^1.5.1",
+		"@rsbuild/plugin-vue": "^1.2.7",
+		"@types/node": "^25.6.0",
+		"typescript": "^6.0.2",
+		"vue-tsc": "^3.2.6",
+		"webpack-plugin-vuetify": "^3.1.3"
+	}
+}

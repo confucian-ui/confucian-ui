@@ -1,0 +1,74 @@
+@use "sass:string";
+@use "sass:color";
+
+// 將 # 開頭的 hex 轉為 URL-safe 的 %23
+@function encode-color($color) {
+	$str: "#{$color}";
+	@if string.index($str, "#") == 1 {
+		@return "%23" + string.slice($str, 2);
+	}
+	@return $str;
+}
+
+// 將 hex 拆成 "R, G, B" 字串，方便存進 CSS variable，
+// 之後可用 rgb(var(--xxx)) 或 rgba(var(--xxx), alpha) 套用
+@function to-rgb-channels($color) {
+	@return "#{color.channel($color, "red")}, #{color.channel($color, "green")}, #{color.channel($color, "blue")}";
+}
+
+// 角落裝飾：四角放同一個 SVG 圖樣，分別用 transform 翻轉到其他三角。
+// 採 mask-image 方案：SVG 當 mask 形狀，實際顏色由 background-color 決定。
+// 這讓外層可以用 `color: xxx` + `background-color: currentColor` 動態染色，
+// 或直接覆寫 background-color 達到同樣效果，不需重編 SCSS。
+//
+// $path：SVG path 的 d 屬性值，繪製「左上角」那一角的圖樣（座標系 0~size）。
+// $size：SVG viewBox 邊長與實際渲染像素
+// $stroke-width：線寬
+// $pos：圖樣距離外框的 inset
+// $scale：path 座標放大倍率（線寬不跟隨，用 vector-effect="non-scaling-stroke"）
+@mixin corner-decoration(
+	$path: "M1 18L1 7L2 7L2 6L1 6L1 5L3 5L3 1L4 1L4 2L1 2L1 1L2 1L2 4L1 4L1 3L5 3L5 1L6 1L6 2L7 2L7 1L18 1",
+	$size: 35,
+	$stroke-width: 1.2,
+	$pos: 0.5px,
+	$scale: 2.5
+) {
+	// mask 用的 SVG：stroke 用黑色（實際顏色由下方 background-color 決定）
+	$svg-prefix: "<svg xmlns='http://www.w3.org/2000/svg' width='#{$size}' height='#{$size}' viewBox='0 0 #{$size} #{$size}' fill='none' stroke='black' stroke-width='#{$stroke-width}'>";
+	$svg-suffix: "</svg>";
+
+	// 把 path 包進 <g transform="scale(...)">，保留 vector-effect 讓線寬不縮放
+	$scaled-path: "<g transform='scale(#{$scale})'><path d='#{$path}' vector-effect='non-scaling-stroke'/></g>";
+	// 四角：原始為左上角；右上 = 水平翻轉；左下 = 垂直翻轉；右下 = 雙軸翻轉
+	$s: $size;
+	$tl: "#{$scaled-path}";
+	$tr: "<g transform='matrix(-1 0 0 1 #{$s} 0)'>#{$scaled-path}</g>";
+	$bl: "<g transform='matrix(1 0 0 -1 0 #{$s})'>#{$scaled-path}</g>";
+	$br: "<g transform='matrix(-1 0 0 -1 #{$s} #{$s})'>#{$scaled-path}</g>";
+
+	$url-tl: url("data:image/svg+xml;utf8,#{$svg-prefix}#{$tl}#{$svg-suffix}");
+	$url-tr: url("data:image/svg+xml;utf8,#{$svg-prefix}#{$tr}#{$svg-suffix}");
+	$url-bl: url("data:image/svg+xml;utf8,#{$svg-prefix}#{$bl}#{$svg-suffix}");
+	$url-br: url("data:image/svg+xml;utf8,#{$svg-prefix}#{$br}#{$svg-suffix}");
+
+	// 顏色取自 --v-border-color（R,G,B 數字格式），caller 可覆寫
+	background-color: rgb(var(--v-border-color));
+
+	// mask：四張 SVG 分別對應四角
+	mask-image: $url-tl, $url-tr, $url-bl, $url-br;
+	mask-repeat: no-repeat;
+	mask-position:
+		top $pos left $pos,
+		top $pos right $pos,
+		bottom $pos left $pos,
+		bottom $pos right $pos;
+	mask-size: #{$size}px #{$size}px;
+	-webkit-mask-image: $url-tl, $url-tr, $url-bl, $url-br;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position:
+		top $pos left $pos,
+		top $pos right $pos,
+		bottom $pos left $pos,
+		bottom $pos right $pos;
+	-webkit-mask-size: #{$size}px #{$size}px;
+}

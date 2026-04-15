@@ -1,0 +1,12 @@
+// Form field（v-text-field / v-select / v-textarea 等）的 Confucian 樣式微調
+
+// Outlined variant：上緣 outline 的水平線會落在 floating label 的垂直中線，
+// 造成字被切過。給 field 一點 margin-top，把整個 field 往下推一點，
+// 讓 floating label 的位置不會疊到 v-row 或上方容器的邊界。
+//
+// 這個 workaround 可以套用在所有 outlined 變體（含 v-text-field / v-textarea /
+// v-select / v-autocomplete / v-combobox）而不用個別處理，因為它們都會
+// 展開成 .v-field.v-field--variant-outlined。
+.v-field--variant-outlined {
+	margin-top: 0.4rem;
+}

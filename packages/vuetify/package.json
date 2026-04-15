@@ -1,0 +1,91 @@
+{
+	"name": "@confucian-ui/vuetify",
+	"version": "0.1.0",
+	"description": "Vuetify v4 admin template — with the gravitas of Confucian aesthetics.",
+	"type": "module",
+	"license": "PolyForm-Noncommercial-1.0.0",
+	"author": "Mu-Tsun Tsai <don.m.t.tsai@gmail.com> (https://github.com/MuTsunTsai)",
+	"repository": {
+		"type": "github",
+		"url": "https://www.github.com/mutsuntsai/confucian-ui"
+	},
+	"keywords": [
+		"vue",
+		"vuetify",
+		"admin",
+		"template",
+		"dashboard",
+		"confucian",
+		"theme"
+	],
+	"files": [
+		"dist",
+		"src/styles",
+		"src/styles.d.ts"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/types/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./blueprint": {
+			"types": "./dist/types/blueprint.d.ts",
+			"import": "./dist/blueprint.js"
+		},
+		"./components": {
+			"types": "./dist/types/components/index.d.ts",
+			"import": "./dist/components.js"
+		},
+		"./composables": {
+			"types": "./dist/types/composables/index.d.ts",
+			"import": "./dist/composables.js"
+		},
+		"./styles": {
+			"types": "./src/styles.d.ts",
+			"sass": "./src/styles/index.scss",
+			"default": "./src/styles/index.scss"
+		},
+		"./styles/*": {
+			"types": "./src/styles.d.ts",
+			"sass": "./src/styles/*",
+			"default": "./src/styles/*"
+		},
+		"./styles/mixins": {
+			"types": "./src/styles.d.ts",
+			"sass": "./src/styles/_mixins.scss",
+			"default": "./src/styles/_mixins.scss"
+		},
+		"./styles/variables": {
+			"types": "./src/styles.d.ts",
+			"sass": "./src/styles/_variables.scss",
+			"default": "./src/styles/_variables.scss"
+		}
+	},
+	"sideEffects": [
+		"**/*.scss",
+		"**/*.css"
+	],
+	"scripts": {
+		"build": "rslib build",
+		"dev": "rslib build --watch",
+		"typecheck": "vue-tsc --noEmit"
+	},
+	"peerDependencies": {
+		"@phosphor-icons/vue": "^2.2.0",
+		"vue": "^3.5.0",
+		"vue-router": "^4.4.0",
+		"vuetify": "^4.0.0"
+	},
+	"devDependencies": {
+		"@phosphor-icons/vue": "^2.2.1",
+		"@rsbuild/core": "^1.7.5",
+		"@rsbuild/plugin-vue": "^1.2.7",
+		"@rslib/core": "^0.21.1",
+		"@types/node": "^25.6.0",
+		"typescript": "^6.0.2",
+		"vue": "^3.5.32",
+		"vue-router": "^5.0.4",
+		"vue-tsc": "^3.2.6",
+		"vuetify": "^4.0.5"
+	}
+}

@@ -1,0 +1,45 @@
+@use "variables" as v;
+
+// 統一捲軸樣式：纖細、內斂
+.confucian-scrollbar,
+.v-application {
+	&::-webkit-scrollbar,
+	*::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+
+	&::-webkit-scrollbar-track,
+	*::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb,
+	*::-webkit-scrollbar-thumb {
+		background-color: rgba(107, 83, 68, 0.3);
+		border-radius: v.$border-radius-root;
+	}
+
+	&::-webkit-scrollbar-thumb:hover,
+	*::-webkit-scrollbar-thumb:hover {
+		background-color: rgba(107, 83, 68, 0.5);
+	}
+}
+
+.v-theme--confucianDark {
+	&::-webkit-scrollbar-thumb,
+	*::-webkit-scrollbar-thumb {
+		background-color: rgba(232, 223, 211, 0.2);
+	}
+
+	&::-webkit-scrollbar-thumb:hover,
+	*::-webkit-scrollbar-thumb:hover {
+		background-color: rgba(232, 223, 211, 0.35);
+	}
+}
+
+// Firefox
+.confucian-scrollbar {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(107, 83, 68, 0.3) transparent;
+}

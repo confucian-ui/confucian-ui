@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-Hant">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>feTurbulence Playground — Confucian</title>
+		<style>
+			* { box-sizing: border-box; }
+			html, body {
+				margin: 0;
+				font-family: system-ui, "PingFang TC", "Microsoft JhengHei", sans-serif;
+				background: #2b2622;
+				color: #e8dfd3;
+			}
+			.app {
+				display: grid;
+				grid-template-columns: 340px 1fr;
+				height: 100vh;
+			}
+			.controls {
+				padding: 20px;
+				border-right: 1px solid #433830;
+				overflow-y: auto;
+			}
+			.controls h1 {
+				margin: 0 0 16px;
+				font-size: 1.1rem;
+			}
+			.field {
+				margin-bottom: 18px;
+				font-size: 0.85rem;
+			}
+			.field label {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 6px;
+			}
+			.field label .val {
+				font-family: "JetBrains Mono", ui-monospace, monospace;
+				color: #d4a061;
+			}
+			.field input[type="range"] { width: 100%; }
+			.field input[type="text"],
+			.field input[type="color"],
+			.field textarea {
+				width: 100%;
+				background: #1a1410;
+				color: #e8dfd3;
+				border: 1px solid #433830;
+				border-radius: 3px;
+				padding: 6px 8px;
+				font-family: inherit;
+				font-size: 0.82rem;
+			}
+			.field input[type="color"] {
+				height: 36px;
+				padding: 2px;
+			}
+			.preview-area {
+				display: flex;
+				flex-direction: column;
+				overflow: hidden;
+			}
+			.preview {
+				flex: 1;
+				position: relative;
+				background: #fffbf5;
+				overflow: hidden;
+			}
+			.preview__content {
+				position: relative;
+				z-index: 1;
+				padding: 40px;
+				color: #2b2622;
+				max-width: 640px;
+			}
+			.preview__content h2 {
+				font-family: "Noto Serif TC", Georgia, serif;
+				margin: 0 0 12px;
+				font-size: 1.75rem;
+			}
+			.preview__content p {
+				line-height: 1.8;
+				margin: 0 0 10px;
+			}
+			.noise-layer {
+				position: absolute;
+				inset: 0;
+				pointer-events: none;
+				z-index: 0;
+			}
+			.output {
+				padding: 16px 20px;
+				border-top: 1px solid #433830;
+				background: #1a1410;
+				font-family: "JetBrains Mono", ui-monospace, monospace;
+				font-size: 0.78rem;
+				max-height: 32vh;
+				overflow: auto;
+			}
+			.output__label {
+				color: #d4a061;
+				margin-bottom: 8px;
+			}
+			.output pre {
+				margin: 0;
+				white-space: pre-wrap;
+				word-break: break-all;
+				color: #e8dfd3;
+			}
+			.copy-btn {
+				background: #d4a061;
+				color: #1a1410;
+				border: none;
+				padding: 6px 14px;
+				border-radius: 3px;
+				cursor: pointer;
+				font-size: 0.8rem;
+				font-weight: 600;
+			}
+			.copy-btn:hover { background: #e3b97a; }
+			.row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+			}
+			.hint {
+				font-size: 0.75rem;
+				color: #a89e90;
+				margin-top: 4px;
+			}
+			details summary {
+				cursor: pointer;
+				padding: 6px 0;
+				color: #d4a061;
+				font-size: 0.85rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="app">
+			<aside class="controls">
+				<h1>feTurbulence Playground</h1>
+
+				<div class="field">
+					<label>Base Frequency <span class="val" id="bf-val"></span></label>
+					<input type="range" id="bf" min="0.01" max="2" step="0.01" value="0.28" />
+					<div class="hint">越大 = 顆粒越細</div>
+				</div>
+
+				<div class="field">
+					<label>Num Octaves <span class="val" id="oct-val"></span></label>
+					<input type="range" id="oct" min="1" max="6" step="1" value="4" />
+					<div class="hint">疊幾層雜訊（越多越有細節）</div>
+				</div>
+
+				<div class="field">
+					<label>Type</label>
+					<select id="type">
+						<option value="fractalNoise" selected>fractalNoise</option>
+						<option value="turbulence">turbulence</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label>Seed <span class="val" id="seed-val"></span></label>
+					<input type="range" id="seed" min="0" max="100" step="1" value="0" />
+				</div>
+
+				<div class="field">
+					<label>Color (雜訊點顏色)</label>
+					<input type="color" id="color" value="#594028" />
+				</div>
+
+				<div class="field">
+					<label>Intensity <span class="val" id="intensity-val"></span></label>
+					<input type="range" id="intensity" min="0" max="1" step="0.05" value="0.45" />
+					<div class="hint">feColorMatrix 的 alpha 倍率</div>
+				</div>
+
+				<div class="field">
+					<label>Layer Opacity <span class="val" id="op-val"></span></label>
+					<input type="range" id="op" min="0" max="1" step="0.05" value="1" />
+				</div>
+
+				<div class="field">
+					<label>Blend Mode</label>
+					<select id="blend">
+						<option value="multiply" selected>multiply</option>
+						<option value="normal">normal</option>
+						<option value="overlay">overlay</option>
+						<option value="darken">darken</option>
+						<option value="soft-light">soft-light</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label>Tile Size (px) <span class="val" id="size-val"></span></label>
+					<input type="range" id="size" min="80" max="2400" step="20" value="600" />
+				</div>
+
+				<details>
+					<summary>背景色 / 預覽文字</summary>
+					<div class="field" style="margin-top: 10px;">
+						<label>Preview Background</label>
+						<input type="color" id="bg" value="#fffbf5" />
+					</div>
+				</details>
+			</aside>
+
+			<div class="preview-area">
+				<div class="preview" id="preview">
+					<div class="noise-layer" id="noise"></div>
+					<div class="preview__content">
+						<h2>大學之道，在明明德</h2>
+						<p>在親民，在止於至善。知止而後有定，定而後能靜，靜而後能安，安而後能慮，慮而後能得。</p>
+						<p>物有本末，事有終始，知所先後，則近道矣。古之欲明明德於天下者，先治其國；欲治其國者，先齊其家。</p>
+						<p>This is English placeholder. The quick brown fox jumps over the lazy dog.</p>
+					</div>
+				</div>
+				<div class="output">
+					<div class="row">
+						<span class="output__label">複製到 SCSS：</span>
+						<button class="copy-btn" id="copy">複製</button>
+					</div>
+					<pre id="out"></pre>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			const $ = id => document.getElementById(id);
+
+			function hexToRgbFloat(hex) {
+				const v = hex.replace("#", "");
+				const r = parseInt(v.slice(0, 2), 16) / 255;
+				const g = parseInt(v.slice(2, 4), 16) / 255;
+				const b = parseInt(v.slice(4, 6), 16) / 255;
+				return { r, g, b };
+			}
+
+			function applyPreview(bg, dataUri, renderedSize, op, blend) {
+				$("preview").style.background = bg;
+				const noise = $("noise");
+				noise.style.backgroundImage = `url("${dataUri}")`;
+				noise.style.backgroundSize = `${renderedSize}px ${renderedSize}px`;
+				noise.style.opacity = op;
+				noise.style.mixBlendMode = blend;
+			}
+
+			function buildScss(op, blend, dataUri, renderedSize) {
+				return "&::before {\n" +
+					"\tcontent: \"\";\n" +
+					"\tposition: absolute;\n" +
+					"\tinset: 0;\n" +
+					"\tpointer-events: none;\n" +
+					"\tz-index: 0;\n" +
+					`\topacity: ${op};\n` +
+					`\tmix-blend-mode: ${blend};\n` +
+					`\tbackground-image: url("${dataUri}");\n` +
+					`\tbackground-size: ${renderedSize}px ${renderedSize}px;\n` +
+					"}";
+			}
+
+			function render() {
+				const bf = parseFloat($("bf").value);
+				const oct = parseInt($("oct").value, 10);
+				const type = $("type").value;
+				const seed = parseInt($("seed").value, 10);
+				const color = hexToRgbFloat($("color").value);
+				const intensity = parseFloat($("intensity").value);
+				const op = parseFloat($("op").value);
+				const blend = $("blend").value;
+				const size = parseInt($("size").value, 10);
+				const bg = $("bg").value;
+
+				// update labels
+				$("bf-val").textContent = bf.toFixed(2);
+				$("oct-val").textContent = oct;
+				$("seed-val").textContent = seed;
+				$("intensity-val").textContent = intensity.toFixed(2);
+				$("op-val").textContent = op.toFixed(2);
+				$("size-val").textContent = size + "px";
+
+				// build SVG
+				const matrix = `0 0 0 0 ${color.r.toFixed(3)}  0 0 0 0 ${color.g.toFixed(3)}  0 0 0 0 ${color.b.toFixed(3)}  0 0 0 ${intensity} 0`;
+				const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}'><filter id='n' x='0' y='0' width='100%' height='100%'><feTurbulence type='${type}' baseFrequency='${bf}' numOctaves='${oct}' seed='${seed}' stitchTiles='stitch'/><feColorMatrix values='${matrix}'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>`;
+				const dataUri = `data:image/svg+xml;utf8,${svg}`;
+
+				applyPreview(bg, dataUri, size, op, blend);
+				$("out").textContent = buildScss(op, blend, dataUri, size);
+			}
+
+			const FIELD_IDS = ["bf", "oct", "type", "seed", "color", "intensity", "op", "blend", "size", "bg"];
+			const STORAGE_KEY = "confucian-turbulence-playground";
+
+			function saveState() {
+				const state = {};
+				for(const id of FIELD_IDS) state[id] = $(id).value;
+				try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch { /* quota / disabled */ }
+			}
+
+			function loadState() {
+				try {
+					const raw = localStorage.getItem(STORAGE_KEY);
+					if(!raw) return;
+					const state = JSON.parse(raw);
+					for(const id of FIELD_IDS) {
+						if(state[id] !== undefined) $(id).value = state[id];
+					}
+				} catch { /* 無效 JSON 就忽略 */ }
+			}
+
+			FIELD_IDS.forEach(id => {
+				$(id).addEventListener("input", () => {
+					render();
+					saveState();
+				});
+				$(id).addEventListener("change", () => {
+					render();
+					saveState();
+				});
+			});
+
+			$("copy").addEventListener("click", async () => {
+				await navigator.clipboard.writeText($("out").textContent);
+				$("copy").textContent = "已複製！";
+				setTimeout(() => { $("copy").textContent = "複製"; }, 1500);
+			});
+
+			loadState();
+			render();
+		</script>
+	</body>
+</html>

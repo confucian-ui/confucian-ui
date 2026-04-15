@@ -1,0 +1,229 @@
+@use "variables" as v;
+@use "mixins" as m;
+
+// 側欄樣式
+// 顏色 SSOT 全部在 tokens.ts / theme（light.ts、dark.ts），本檔只讀 Vuetify runtime
+// CSS variable（--v-theme-sidebar-bg / --v-theme-sidebar-fg / --v-theme-sidebar-fg-muted）。
+// v-navigation-drawer 已用 color="sidebar-bg" 套底色，這裡不覆寫 background。
+
+$item-weight: 600; // 君子不重則不威
+
+.confucian-sidebar {
+	--v-border-color: #{m.to-rgb-channels(#a67f56)};
+
+	&:not(.v-navigation-drawer--rail)::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		z-index: 100;
+		@include m.corner-decoration($pos: 1px);
+	}
+
+	// 捲軸：隱藏原生 scrollbar，改以絕對定位的自製 thumb 呈現。
+	// 平時隱藏，捲動時由 JS 加上 .is-scrolling 而淡入，停止 700ms 後淡出。
+
+	.v-navigation-drawer__content {
+		scrollbar-width: none;
+		// 阻止捲動冒泡到 body：避免 mobile 開啟 drawer 時第一下觸控滑過正文
+		overscroll-behavior: contain;
+
+		&::-webkit-scrollbar {
+			width: 0;
+			height: 0;
+			display: none;
+		}
+	}
+
+	// 自製 thumb 附在 drawer 本身（非 scrolling element），
+	// 位置與高度由 JS 透過 CSS 變數餵進來
+	position: relative;
+	// 軌道上下留白，讓 thumb 不貼齊 drawer 邊緣
+	--confucian-thumb-track-padding: 8px;
+
+	&::after {
+		content: "";
+		position: absolute;
+		right: 2px;
+		// thumb 的起點 = 可捲區相對 drawer 的 top offset（避開固定的 brand 區） + 上 padding
+		top: calc(var(--confucian-thumb-offset-top, 0px) + var(--confucian-thumb-track-padding));
+		width: 4px;
+		height: var(--confucian-thumb-height, 0px);
+		transform: translateY(var(--confucian-thumb-top, 0px));
+		background-color: rgba(var(--v-theme-sidebar-fg), 0.3);
+		border-radius: 2px;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.5s ease;
+		z-index: 2;
+	}
+
+	&.is-scrolling::after {
+		opacity: 1;
+		transition: opacity 0.1s ease;
+	}
+
+	.v-list {
+		background-color: transparent;
+	}
+
+	// 折疊成 rail 時減少外距，讓 icon 在窄欄內置中
+	&.v-navigation-drawer--rail .v-list-item {
+		margin-inline: 4px;
+	}
+
+	.v-list-item {
+		border-radius: v.$border-radius-root;
+		margin-inline: 8px;
+		min-height: 40px;
+		// 縮短 icon 與文字之間的空白（Vuetify 預設 32px，略寬）
+		--v-list-prepend-gap: 16px;
+
+		.v-list-item-title {
+			font-family: var(--v-font-heading);
+			font-size: 1rem;
+			font-weight: $item-weight;
+			letter-spacing: 0.05em;
+		}
+
+		&:hover {
+			background-color: rgba(var(--v-theme-sidebar-fg), 0.06);
+		}
+	}
+
+	.v-list-group__items {
+		margin-left: 24px;
+		border-left: 2px solid rgba(var(--v-theme-sidebar-fg-muted), 0.4);
+
+		.v-list-item {
+			--indent-padding: 0px;
+		}
+	}
+
+	.v-list-subheader {
+		color: rgb(var(--v-theme-sidebar-fg-muted));
+		font-size: 0.7rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		font-weight: 600;
+		padding-inline: 12px;
+		min-height: 28px;
+		max-width: 240px;
+		margin-top: 4px;
+		margin-bottom: -4px;
+		transition: max-width 0.5s ease;
+	}
+
+	&.v-navigation-drawer--rail .v-list-subheader {
+		max-width: 0;
+	}
+
+	.v-divider {
+		border-color: rgba(var(--v-theme-sidebar-fg-muted), 0.2);
+	}
+
+	// 竹紋分隔線依 sidebar 文字色動態：fg muted 當線、fg 當節點
+	.confucian-bamboo-divider {
+		// 元件內建 margin-block: 1rem，sidebar 改用 padding-block 控制
+		margin-block: 0;
+		padding-block: 8px;
+
+		.confucian-bamboo-divider__line {
+			border-top-color: rgba(var(--v-theme-sidebar-fg-muted), 0.4);
+		}
+
+		.confucian-bamboo-divider__node {
+			background-color: rgba(var(--v-theme-sidebar-fg-muted), 0.8);
+		}
+	}
+
+	&__brand {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 10px;
+		padding-block-start: 16px;
+		padding-block-end: 12px;
+		padding-inline: 12px;
+		font-family: var(--v-font-heading);
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: rgb(var(--v-theme-primary));
+		border-bottom: 1px solid rgba(var(--v-theme-sidebar-fg-muted), 0.2);
+		overflow: hidden;
+		transition: padding-inline 0.5s ease;
+		text-decoration: none;
+
+		&--clickable {
+			cursor: pointer;
+
+			&:hover {
+				background-color: rgba(var(--v-theme-sidebar-fg), 0.04);
+			}
+		}
+
+		.confucian-logo__mark {
+			max-height: 100%;
+			max-width: 100%;
+		}
+	}
+
+	&.v-navigation-drawer--rail &__brand {
+		padding-inline: 8px;
+	}
+}
+
+// Rail 模式下 group 的 popup：Vuetify 的 v-menu 會 teleport 到 body，
+// 所以不能用 .confucian-sidebar 包起來選取。這裡以頂層選擇器套用與 sidebar 一致的樣式。
+.confucian-sidebar__popup {
+	color: rgb(var(--v-theme-sidebar-fg));
+
+	.v-list-item-title {
+		font-family: var(--v-font-heading);
+		font-size: 1rem;
+		font-weight: $item-weight;
+		letter-spacing: 0.05em;
+	}
+
+	.v-list-item {
+		--prepend-width: 36px;
+	}
+}
+
+// sidebar 與 rail popup 共用 icon 色彩與 active 狀態（兩者不同 DOM 層級但視覺需一致）
+.confucian-sidebar,
+.confucian-sidebar__popup {
+	.v-list-item__prepend .v-icon {
+		color: v.$sidebar-icon;
+
+		// 淺色主題的宣紙米底上預設銅色偏淡，加深以保可讀性；
+		// 同時把 Phosphor duotone 的次要層（預設 opacity 0.2）提亮為實色，視覺更清楚
+		.v-theme--confucianLight & {
+			color: #694c30;
+
+			path[opacity="0.2"] {
+				opacity: 1;
+				fill: #c09870;
+			}
+		}
+
+		.v-theme--confucianDark & path[opacity="0.2"] {
+			opacity: 0.3;
+		}
+	}
+
+	// 選取中的項目：淺色沿用 sidebar-fg、靠底色區分；深色底色對比不足，文字改走 primary 強調
+	// overlay 預設疊一層 primary，會蓋掉 sidebar-active 底色，這裡清掉
+	.v-list-item--active,
+	.v-list-item[aria-current="page"] {
+		background-color: rgb(var(--v-theme-sidebar-active));
+
+		.v-theme--confucianDark & {
+			color: rgb(var(--v-theme-primary));
+		}
+
+		.v-list-item__overlay {
+			opacity: 0;
+		}
+	}
+}

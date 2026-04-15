@@ -1,0 +1,71 @@
+@use "variables" as v;
+
+// 竹紋分隔線
+// 結構：一條細線 + 三個等距竹節圓點（模擬竹節）
+// ConfucianBambooDivider.vue 的 root class 為 .confucian-bamboo-divider
+
+.confucian-bamboo-divider {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	gap: 6px;
+	user-select: none;
+	// 內建上下間距，使用端通常無需再加 my-*；要覆寫時直接寫 my-* 即可勝出
+	margin-block: 1rem;
+
+	&__line {
+		flex: 1 1 auto;
+		height: 0;
+		border-top: 1px solid v.$bamboo-divider-color;
+
+		.v-theme--confucianDark & {
+			border-top-color: v.$bamboo-divider-color-dark;
+		}
+	}
+
+	&__node {
+		flex: 0 0 auto;
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background-color: v.$bamboo-divider-node-color;
+
+		.v-theme--confucianDark & {
+			background-color: v.$bamboo-divider-node-color-dark;
+		}
+	}
+
+	// 竹節集中在中央（預設），line - node node node - line
+	&--center {
+		.confucian-bamboo-divider__nodes {
+			display: inline-flex;
+			gap: 10px;
+			align-items: center;
+		}
+	}
+
+	// 僅左側出現竹節，用於 sidebar group 分隔
+	&--start {
+		.confucian-bamboo-divider__nodes {
+			display: inline-flex;
+			gap: 6px;
+			align-items: center;
+			margin-left: 12px;
+		}
+	}
+
+	// 帶標題樣式：在節點旁加一段文字（群組標題）
+	&--labeled {
+		.confucian-bamboo-divider__label {
+			font-size: 0.72rem;
+			font-weight: 500;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: rgba(0, 0, 0, 0.55);
+
+			.v-theme--confucianDark & {
+				color: rgba(255, 255, 255, 0.55);
+			}
+		}
+	}
+}

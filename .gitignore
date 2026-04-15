@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.dist-staging/
+.rsbuild/
+.rslib/
+.DS_Store
+*.log
+.env
+.env.local
+.vscode/
+.idea/
+*.tsbuildinfo
+CLAUDE.md

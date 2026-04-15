@@ -1,0 +1,7 @@
+// Vuetify SASS 變數覆寫
+// 消費端在 webpack-plugin-vuetify 的 styles.configFile 指向此檔案，
+// Vuetify 編譯 styles 時會套用這裡的覆寫
+
+@forward "vuetify/settings" with (
+	$grid-gutter: 16px
+);

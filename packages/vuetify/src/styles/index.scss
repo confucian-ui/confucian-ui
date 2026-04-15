@@ -1,0 +1,232 @@
+// Confucian 主題全域樣式入口
+// **重要：消費者必須先在 main.ts 裡 import "vuetify/styles";**
+// 再 import "@confucian-ui/vuetify/styles";。
+// 這個順序確保 Vuetify 的基底 CSS 先落地，Confucian 的覆寫後到，
+// 且 Vue SFC 的 <style> 也晚於兩者插入，避免 label clipping 等問題。
+
+// 載入 core 元件 SFC 的 scoped CSS（由 rslib 從 <style scoped> 打包而成）
+// 這條路徑對應 package.json 的 exports "./components.css"
+@use "../../dist/components.css";
+
+@use "variables";
+@use "mixins" as m;
+@use "typography";
+@use "bamboo-divider";
+@use "form-field";
+@use "grid";
+@use "sidebar";
+@use "scrollbar";
+
+// 全域字體
+// 透過 Vuetify 4 原生 CSS variable：--v-font-body（內文）、--v-font-heading（標題）
+// 這樣 text-display-* / text-headline-* / text-title-* 等 typography utility 自動吃到襯線
+// 字體可透過切換 html.is-serif 一鍵比較內文 sans/serif
+:root {
+	--v-font-body:
+		system-ui, -apple-system, "Segoe UI", "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+	--v-font-heading:
+		"Noto Serif TC", "Source Han Serif TC", "PingFang TC", "Songti TC", "Microsoft JhengHei", Georgia, serif;
+}
+
+// 在 root 設 color-scheme，讓瀏覽器原生 UI（捲軸、表單元件、autofill 等）跟隨主題
+// data-confucian-theme 由 createConfucian / useConfucianTheme 寫入
+html[data-confucian-theme="light"] {
+	color-scheme: light;
+}
+
+html[data-confucian-theme="dark"] {
+	color-scheme: dark;
+}
+
+html.is-serif {
+	// 內文也跟著 heading 走襯線
+	--v-font-body: var(--v-font-heading);
+}
+
+// 紋路：以 SVG feTurbulence 產生柔和顆粒，淺色做「宣紙」感、深色做「夜書齋啞光」感
+// 純程式碼、無需圖片；用 mix-blend-mode: multiply 讓暖色系底色保留主導
+.v-main::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	background-repeat: repeat;
+	background-size: 280px 280px;
+}
+
+.v-theme--confucianLight .v-main::before {
+	mix-blend-mode: multiply;
+	// 深褐雜訊疊在宣紙色上做「宣紙」感
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.21' numOctaves='1' seed='27' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.349  0 0 0 0 0.251  0 0 0 0 0.157  0 0 0 0.10 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.v-theme--confucianDark .v-main::before {
+	mix-blend-mode: screen;
+	// 淡白雜訊疊在深夜書齋的暗底上做「啞光」質感
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.21' numOctaves='1' seed='27' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.75  0 0 0 0 0.75  0 0 0 0 0.75  0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+// v-main 內容本身需要 relative + z-index 才不會被紋理遮住
+.v-main {
+	position: relative;
+
+	> * {
+		position: relative;
+		z-index: 1;
+	}
+}
+
+// Vuetify 4 的 text-* typography class 不再含 margin reset（v3 有），
+// 造成 <h1>~<h6> / <p> 仍帶有瀏覽器 UA 預設 margin。
+// 這裡統一歸零，讓開發者以 mt-* / mb-* utility 明示間距。
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin-block-start: 0;
+	margin-block-end: 0.75em;
+}
+
+// 卡片：微圓角已由 defaults 處理。這裡加邊框色 + 回字紋角落裝飾
+// 回字紋以 SVG inline 鋪設於四角（mask 方式，讓邊框色可動態調整）
+.v-card {
+	--v-border-color: #{m.to-rgb-channels(#c9c1ac)};
+	border-color: rgb(var(--v-border-color)) !important;
+	box-shadow:
+		0 1px 2px rgba(43, 38, 34, 0.04),
+		0 2px 6px rgba(43, 38, 34, 0.05);
+	position: relative;
+
+	/* 回字紋角落裝飾：四角放同一個 SVG path，只需編輯 mixin 參數的 $path 即可同步
+	 * 採 mask-image，顏色取自 --v-border-color（與卡片邊框同色） */
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		@include m.corner-decoration;
+	}
+
+	// Dialog 內的 card 邊框強調（不加 hover —— card 通常不可點擊，避免誤導 affordance）
+	.v-dialog & {
+		--v-border-color: #{m.to-rgb-channels(#a67f56)};
+		box-shadow:
+			0 2px 4px rgba(43, 38, 34, 0.06),
+			0 6px 14px rgba(43, 38, 34, 0.07);
+	}
+}
+
+// Tonal 卡片：Vuetify 預設用半透明底色，會透出 v-main 的紙質紋路。
+// 用 backdrop-filter: blur(0px) 觸發 stacking context，
+// 再以 ::after 鋪一層不透明 surface 底色於 card 內容之下，阻擋紋路穿透
+.v-card--variant-tonal {
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background-color: rgb(var(--v-theme-surface));
+		border-radius: inherit;
+	}
+}
+
+// 深色模式：邊框改為偏暖灰、陰影加深
+.v-theme--confucianDark .v-card {
+	--v-border-color: #{m.to-rgb-channels(#857f67)};
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.25),
+		0 2px 6px rgba(0, 0, 0, 0.2);
+
+	.v-dialog & {
+		--v-border-color: #{m.to-rgb-channels(#c4bb96)};
+		box-shadow:
+			0 2px 4px rgba(0, 0, 0, 0.3),
+			0 6px 14px rgba(0, 0, 0, 0.25);
+	}
+}
+
+// Confucian 專屬 class 的按鈕微調
+.confucian-btn {
+	letter-spacing: 0.02em;
+}
+
+// Stepper：預設的 elevation 陰影在 card 內顯得雜亂，我們把它壓掉
+// Vuetify 4 給 .v-stepper 與 .v-stepper-header 都套了 elevation-4，這裡一併清除
+.v-stepper,
+.v-stepper-header {
+	box-shadow: none !important;
+}
+
+// Stepper：active step 的圓圈預設只用 primary 文字色，與 surface-variant 對比不足
+// 強制填 primary 底 + on-primary 文字，與未選步驟拉開差異
+.v-stepper-item--selected .v-stepper-item__avatar.v-avatar {
+	background-color: rgb(var(--v-theme-primary)) !important;
+	color: rgb(var(--v-theme-on-primary)) !important;
+}
+
+// DataTable：預設 row 高 44px，當欄位放 avatar + 多行文字會擠；放寬 padding
+.v-data-table tbody td {
+	padding-block: 8px;
+}
+
+// DataTable thead：用 surface-variant 做低強度高亮背景
+.v-data-table thead th {
+	background-color: rgb(var(--v-theme-surface-variant)) !important;
+}
+
+// DataTable 排序圖示：預設緊貼文字，加一點 inline 間距
+.v-data-table__th--sortable .v-data-table-header__sort-icon {
+	margin-inline: 6px;
+}
+
+// Ripple / hover overlay：兩者皆吃 currentColor + opacity
+// 深色模式按鈕 on-* 多為 charredInk（黑），會在亮色按鈕上產生黑色漣漪/覆蓋；強制改為白
+.v-theme--confucianDark {
+	.v-ripple__animation {
+		color: #fff7 !important;
+	}
+
+	.v-btn__overlay {
+		background-color: #fffc !important;
+	}
+}
+
+// 特化卡片：light 模式維持 surface 不變；dark 模式套用頂到底的暖色漸層
+// 使用方式：在 <v-card> 上加 class="confucian-card--emphasis"
+.confucian-card--emphasis {
+	.v-theme--confucianDark & {
+		background: linear-gradient(180deg, #4e3f2a 0%, #333528 100%) !important;
+	}
+}
+
+// Drawer 的 scrim：手機上需攔截所有觸控，避免 swipe 穿透到背後正文
+.v-navigation-drawer__scrim {
+	touch-action: none;
+}
+
+// Tooltip：加細邊框，避免在淺色背景上幾乎隱形（Vuetify 預設只有半透明深底）
+.v-tooltip > .v-overlay__content {
+	border: 1px solid rgba(var(--v-theme-on-surface), 0.4);
+}
+
+// Dialog 內的 v-card：給更明顯的陰影與邊框對比，避免跟背景融在一起
+.v-overlay__content > .v-card {
+	box-shadow:
+		0 6px 16px rgba(0, 0, 0, 0.18),
+		0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+// DatePicker 嵌入於 card 時：拿掉自帶 elevation 陰影
+.v-date-picker.confucian-date-picker--embedded {
+	box-shadow: none;
+
+	.v-date-picker-month,
+	.v-date-picker-years,
+	.v-date-picker-months {
+		padding-inline: 0;
+	}
+}
