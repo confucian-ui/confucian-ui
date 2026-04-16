@@ -18,7 +18,9 @@ export const phosphorAliases: Record<string, string> = {
 	"error": "ph-warning-circle",
 
 	// 方向
-	"collapse": "ph-caret-up",
+	// collapse / expand 故意用同一圖示：v-list-group 會在 open/closed 換這兩個 alias，
+	// 我們讓兩者都是 down，再靠 CSS transform 做旋轉過場（見 _sidebar.scss）
+	"collapse": "ph-caret-down",
 	"expand": "ph-caret-down",
 	"prev": "ph-caret-left",
 	"next": "ph-caret-right",
