@@ -63,12 +63,7 @@
 			<v-col cols="12">
 				<v-card class="pa-4">
 					<h3 class="text-title-large font-weight-medium mb-3">最新訂單</h3>
-					<v-data-table
-						:headers="orderHeaders"
-						:items="recentOrders"
-						density="comfortable"
-						:items-per-page="5"
-					>
+					<v-data-table :headers="orderHeaders" :items="recentOrders" density="comfortable" :items-per-page="5">
 						<template #[`item.status`]="{ item }">
 							<v-chip :color="statusColor(item.status)" size="small" variant="tonal">
 								{{ item.status }}
@@ -88,9 +83,10 @@
 	import { ref, computed } from "vue";
 	import VueApexCharts from "vue3-apexcharts";
 	import { useTheme } from "vuetify";
-	import { ConfucianPageHeader } from "@confucian-ui/vuetify";
+	import { ConfucianPageHeader, useApexDefaults } from "@confucian-ui/vuetify";
 
 	import type { ApexOptions } from "apexcharts";
+	import { deepMerge } from "@/utils/deepMerge";
 
 	const apexchart = VueApexCharts;
 	const theme = useTheme();
@@ -117,11 +113,11 @@
 		},
 	]);
 
-	const chartOptions = computed(() => ({
+	const baseOptions = useApexDefaults();
+
+	const chartOptions = computed(() => deepMerge<ApexOptions>(baseOptions.value, {
 		chart: {
-			toolbar: { show: false },
-			fontFamily: "inherit",
-			foreColor: theme.current.value.colors["on-surface"],
+			zoom: { enabled: false },
 		},
 		colors: [theme.current.value.colors.primary],
 		dataLabels: { enabled: false },
@@ -130,10 +126,6 @@
 			type: "gradient",
 			gradient: { shadeIntensity: 1, opacityFrom: 0.35, opacityTo: 0.05 },
 		},
-		grid: {
-			borderColor: theme.current.value.variables["border-color"] as string,
-			strokeDashArray: 3,
-		},
 		xaxis: {
 			categories: range.value === "7" ?
 				["週一", "週二", "週三", "週四", "週五", "週六", "週日"] :
@@ -141,8 +133,7 @@
 					range.value === "30" ? `${i + 1}` : `第 ${i + 1} 週`
 				),
 		},
-		tooltip: { theme: theme.current.value.dark ? "dark" : "light" },
-	} as ApexOptions));
+	}));
 
 	const activities = ref([
 		{ title: "王雅雯 完成訂單 #10284", time: "2 分鐘前", icon: "ph-check", color: "success" },

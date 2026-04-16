@@ -37,6 +37,8 @@
 	import { useTheme } from "vuetify";
 	import { ConfucianPageHeader, useApexDefaults } from "@confucian-ui/vuetify";
 
+	import { deepMerge } from "@/utils/deepMerge";
+
 	import type { ApexOptions } from "apexcharts";
 
 	const apexchart = VueApexCharts;
@@ -64,13 +66,15 @@
 		{ name: "2025", data: [210, 380, 300, 520, 420, 680, 720, 600, 750, 840, 720, 900] },
 		{ name: "2026", data: [240, 410, 360, 580, 510, 720, 820, 710, 890, 960, 880, 1050] },
 	];
-	const lineOptions = computed(() => ({
-		...baseOptions.value,
+	const lineOptions = computed(() => deepMerge<ApexOptions>(baseOptions.value, {
+		chart: {
+			zoom: { enabled: false },
+		},
 		colors: palette.value.slice(0, 2),
 		dataLabels: { enabled: false },
 		stroke: { curve: "smooth", width: 2.5 },
 		xaxis: { categories: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"] },
-	} as ApexOptions));
+	}));
 
 	const donutSeries = [44, 32, 20, 14];
 	const donutOptions = computed(() => ({

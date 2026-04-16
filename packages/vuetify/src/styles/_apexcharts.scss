@@ -1,0 +1,35 @@
+// ApexCharts 整合：tooltip 顏色綁到 CSS variable，跟著 Vuetify 主題即時切換
+//
+// 為什麼：ApexCharts 的 `tooltip.theme: "light" | "dark"` 是初始化時固定的，
+// 主題切換後 updateOptions 不會重建 tooltip 樣式，會留在原本的色。
+// 這裡用全域 CSS 直接覆蓋，把 Apex 內建的 tooltip 顏色換成讀主題變數，
+// 任何時候切深淺色都立刻反映。
+
+.apexcharts-tooltip {
+	background: rgb(var(--v-theme-surface)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
+	border: 1px solid rgba(var(--v-theme-on-surface), 0.2) !important;
+	box-shadow:
+		0 2px 4px rgba(0, 0, 0, 0.06),
+		0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.apexcharts-tooltip-title {
+	background: rgb(var(--v-theme-surface-variant)) !important;
+	border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.1) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
+	font-family: var(--v-font-heading);
+}
+
+// xaxis tooltip（hover 時 X 軸下方的小提示）一併處理
+.apexcharts-xaxistooltip,
+.apexcharts-yaxistooltip {
+	background: rgb(var(--v-theme-surface)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
+	border-color: rgba(var(--v-theme-on-surface), 0.2) !important;
+
+	&::before,
+	&::after {
+		border-color: transparent !important;
+	}
+}

@@ -10,7 +10,10 @@ import type { ComputedRef } from "vue";
  * - `chart.foreColor`：文字 / 座標軸色（跟隨 on-surface）
  * - `chart.fontFamily`：inherit，吃到外層 font
  * - `grid.borderColor`：使用主題的 border-color variable
- * - `tooltip.theme`：light / dark 自動切換
+ *
+ * Tooltip 顏色不在這裡處理：ApexCharts 的 tooltip.theme 是初始化時固定的，
+ * 主題切換後不會跟著變。改在 styles/_apexcharts.scss 用 CSS variable 覆蓋，
+ * 主題切換即時反映。
  *
  * 消費端範例：
  * ```ts
@@ -34,9 +37,6 @@ export interface ApexDefaults {
 		borderColor: string;
 		strokeDashArray: number;
 	};
-	tooltip: {
-		theme: "light" | "dark";
-	};
 }
 
 export function useApexDefaults(): ComputedRef<ApexDefaults> {
@@ -51,9 +51,6 @@ export function useApexDefaults(): ComputedRef<ApexDefaults> {
 		grid: {
 			borderColor: theme.current.value.variables["border-color"] as string,
 			strokeDashArray: 3,
-		},
-		tooltip: {
-			theme: theme.current.value.dark ? "dark" : "light",
 		},
 	}));
 }
