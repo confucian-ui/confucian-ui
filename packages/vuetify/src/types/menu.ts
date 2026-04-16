@@ -21,6 +21,8 @@ export interface MenuLink {
 	icon?: string;
 	to?: RouteLocationRaw;
 	href?: string;
+	// 供 href 外連使用；常用值："_blank"（開新分頁）
+	target?: string;
 	badge?: MenuBadge;
 	meta?: Record<string, unknown>;
 }

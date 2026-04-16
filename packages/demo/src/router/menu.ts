@@ -3,6 +3,8 @@ import type { MenuEntry } from "@confucian-ui/vuetify";
 // 側欄選單定義。與 router/index.ts 的 routes 保持一致
 // 側欄 icon 走 Phosphor duotone（adapter 預設）；若真的需要單色，後綴改為 `-regular`
 export const menu: MenuEntry[] = [
+	{ title: "儀表板", icon: "ph-chart-line", to: "/dashboard" },
+
 	{ heading: "管理" },
 	{ title: "使用者", icon: "ph-users-three", to: "/users" },
 	{
@@ -55,5 +57,14 @@ export const menu: MenuEntry[] = [
 			{ title: "404 - 頁面不存在", to: "/error/404", icon: "ph-file-x" },
 			{ title: "500 - 伺服器錯誤", to: "/error/500", icon: "ph-file-x" },
 		],
+	},
+
+	{ divider: true },
+
+	{
+		title: "GitHub",
+		icon: "ph-github-logo",
+		href: "https://github.com/confucian-ui/confucian-ui",
+		target: "_blank",
 	},
 ];

@@ -59,6 +59,7 @@
 								v-if="isMenuLink(child)"
 								:to="child.to"
 								:href="child.href"
+								:target="child.target"
 								:prepend-icon="child.icon"
 								:title="child.title"
 							>
@@ -121,6 +122,7 @@
 					v-else-if="isMenuLink(entry)"
 					:to="entry.to"
 					:href="entry.href"
+					:target="entry.target"
 					:prepend-icon="entry.icon"
 					:title="entry.title"
 				>
