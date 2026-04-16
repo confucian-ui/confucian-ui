@@ -30,7 +30,7 @@
 				<v-card class="pa-4">
 					<div class="d-flex align-center justify-space-between mb-3">
 						<h3 class="text-title-large font-weight-medium">訂單趨勢</h3>
-						<v-btn-toggle v-model="range" mandatory density="comfortable" variant="outlined">
+						<v-btn-toggle v-model="range" color="secondary" mandatory density="comfortable" variant="outlined">
 							<v-btn value="7">7 日</v-btn>
 							<v-btn value="30">30 日</v-btn>
 							<v-btn value="90">90 日</v-btn>

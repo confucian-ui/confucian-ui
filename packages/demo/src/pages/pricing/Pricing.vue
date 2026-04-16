@@ -3,7 +3,7 @@
 		<ConfucianPageHeader title="定價方案" subtitle="選擇最適合你的方案" />
 
 		<div class="text-center mb-6">
-			<v-btn-toggle v-model="cycle" mandatory density="comfortable" variant="outlined">
+			<v-btn-toggle v-model="cycle" color="secondary" mandatory density="comfortable" variant="outlined">
 				<v-btn value="monthly">月付</v-btn>
 				<v-btn value="yearly">年付（省 20%）</v-btn>
 			</v-btn-toggle>

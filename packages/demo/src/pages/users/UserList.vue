@@ -22,7 +22,7 @@
 					</v-col>
 					<v-spacer />
 					<v-col cols="auto">
-						<v-btn-toggle v-model="filterRole" multiple density="comfortable" variant="outlined">
+						<v-btn-toggle color="secondary" v-model="filterRole" multiple density="comfortable" variant="outlined">
 							<v-btn value="admin">管理員</v-btn>
 							<v-btn value="editor">編輯</v-btn>
 							<v-btn value="viewer">檢視</v-btn>
