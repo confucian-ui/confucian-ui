@@ -33,7 +33,6 @@
 				<v-data-table
 					:headers="headers"
 					:items="filteredUsers"
-					:search="search"
 					items-per-page="10"
 				>
 					<template #[`item.user`]="{ item }">
@@ -99,11 +98,16 @@
 		{ name: "蔡佩珊", email: "peishan@example.com", role: "editor", department: "財務", active: true, joined: "2024-07-22", color: "accent" },
 	]);
 
-	const filteredUsers = computed(() =>
-		filterRole.value.length === 0 ?
-			users.value :
-			users.value.filter(u => filterRole.value.includes(u.role))
-	);
+	// 搜尋 name + email、並同時套 role filter；
+	// 直接在 computed 做，不用 v-data-table 的 :search，因為它只比對 headers 裡有的 key
+	const filteredUsers = computed(() => {
+		const q = search.value.trim().toLowerCase();
+		return users.value.filter(u => {
+			if(filterRole.value.length > 0 && !filterRole.value.includes(u.role)) return false;
+			if(q && !u.name.toLowerCase().includes(q) && !u.email.toLowerCase().includes(q)) return false;
+			return true;
+		});
+	});
 
 	const roleLabel = (r: string) => {
 		if(r === "admin") return "管理員";
