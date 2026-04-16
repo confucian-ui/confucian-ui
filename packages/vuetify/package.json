@@ -1,13 +1,13 @@
 {
 	"name": "@confucian-ui/vuetify",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Vuetify v4 admin template — with the gravitas of Confucian aesthetics.",
 	"type": "module",
 	"license": "PolyForm-Noncommercial-1.0.0",
 	"author": "Mu-Tsun Tsai <don.m.t.tsai@gmail.com> (https://github.com/MuTsunTsai)",
 	"repository": {
 		"type": "github",
-		"url": "https://www.github.com/mutsuntsai/confucian-ui"
+		"url": "https://www.github.com/confucian-ui/confucian-ui"
 	},
 	"keywords": [
 		"vue",
