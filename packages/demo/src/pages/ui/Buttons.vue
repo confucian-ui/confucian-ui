@@ -17,10 +17,13 @@
 					<h3 class="text-title-large mb-4">顏色</h3>
 					<div class="d-flex flex-wrap ga-2">
 						<v-btn color="primary">Primary</v-btn>
+						<v-btn color="primary-darken-1">Primary darken</v-btn>
 						<v-btn color="secondary">Secondary</v-btn>
+						<v-btn color="secondary-darken-1">Secondary darken</v-btn>
 						<v-btn color="accent">Accent</v-btn>
 						<v-btn color="success">Success</v-btn>
 						<v-btn color="warning">Warning</v-btn>
+						<v-btn color="info">Info</v-btn>
 						<v-btn color="error">Error</v-btn>
 					</div>
 				</v-card>
