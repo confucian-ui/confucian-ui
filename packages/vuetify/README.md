@@ -1,3 +1,7 @@
+<p align="center">
+	<img src="https://raw.githubusercontent.com/confucian-ui/confucian-ui/main/logo.png" alt="Confucian" width="160" />
+</p>
+
 # @confucian-ui/vuetify
 
 **Confucian** 主題的 Vuetify 4 版本。以儒家氣質為靈感的 admin template 套件：淺色模式如攤開的宣紙、深色模式如深夜的書齋。

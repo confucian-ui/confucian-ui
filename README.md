@@ -1,3 +1,7 @@
+<p align="center">
+	<img src="./logo.png" alt="Confucian" width="160" />
+</p>
+
 # Confucian
 
 一個以儒家氣質為靈感的 Vuetify v4 admin template。取其莊嚴肅穆、竹林雅逸之意；淺色模式如**攤開的宣紙**，深色模式如**深夜的書齋**。
