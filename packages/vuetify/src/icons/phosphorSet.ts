@@ -8,6 +8,11 @@ import type { Component } from "vue";
 type PhWeight = "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
 const WEIGHTS = new Set<string>(["thin", "light", "regular", "bold", "fill", "duotone"]);
 
+interface IconComponent {
+	component: Component;
+	weight: PhWeight;
+};
+
 // 將 icon 名解析為 Phosphor 元件 + weight。支援以下輸入格式：
 //   "ph-house"              → PhHouse, weight="duotone"（預設）
 //   "ph-house-regular"      → PhHouse, weight="regular"（真的想要單色時明示）
@@ -15,7 +20,7 @@ const WEIGHTS = new Set<string>(["thin", "light", "regular", "bold", "fill", "du
 //   "ph-house-duotone"      → PhHouse, weight="duotone"
 //   "ph-house-line-duotone" → PhHouseLine, weight="duotone"
 //   "PhHouse"               → PhHouse, weight="duotone"
-function resolvePhosphorIcon(name: string): { component: Component; weight: PhWeight } | undefined {
+function resolvePhosphorIcon(name: string): IconComponent | undefined {
 	let base = name;
 	let weight: PhWeight = "duotone";
 

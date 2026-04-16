@@ -74,11 +74,11 @@
 			</p>
 			<div class="d-flex ga-2 flex-wrap">
 				<v-btn color="primary" variant="flat" prepend-icon="ph-github-logo"
-					   href="https://github.com/confucian-ui/confucian-ui" target="_blank" rel="noopener">
+					href="https://github.com/confucian-ui/confucian-ui" target="_blank" rel="noopener">
 					GitHub
 				</v-btn>
 				<v-btn variant="outlined" prepend-icon="ph-package" href="https://www.npmjs.com/package/@confucian-ui/vuetify"
-					   target="_blank" rel="noopener">
+					target="_blank" rel="noopener">
 					npm
 				</v-btn>
 			</div>
