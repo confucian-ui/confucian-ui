@@ -69,7 +69,13 @@ export const confucianBlueprint: Blueprint = {
 		VSelect: inputBase,
 		VAutocomplete: inputBase,
 		VCombobox: inputBase,
+		VFileInput: inputBase,
+		VNumberInput: inputBase,
+		VOtpInput: inputBase,
+		// labs
 		VDateInput: inputBase,
+		VColorInput: inputBase,
+		VMaskInput: inputBase,
 		VChip: {
 			rounded: "sm",
 		},

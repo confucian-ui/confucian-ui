@@ -20,7 +20,8 @@
 					<v-select v-model="select" :items="items" label="Select" />
 					<v-autocomplete v-model="select" :items="items" label="Autocomplete" />
 					<v-combobox v-model="select" :items="items" label="Combobox" />
-					<v-file-input label="檔案上傳" prepend-icon="$confucian-upload" />
+					<v-file-input label="檔案上傳"
+						prepend-icon="" prepend-inner-icon="$confucian-upload" />
 				</v-card>
 			</v-col>
 
