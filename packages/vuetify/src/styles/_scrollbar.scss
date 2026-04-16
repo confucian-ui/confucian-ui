@@ -1,5 +1,10 @@
 @use "variables" as v;
 
+// 永遠保留右側捲軸軌道：內容長度剛好切換時，避免版面左右跳動
+html {
+	overflow-y: scroll;
+}
+
 // 統一捲軸樣式：纖細、內斂
 .confucian-scrollbar,
 .v-application {
