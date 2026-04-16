@@ -220,13 +220,36 @@ p {
 		0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
-// DatePicker 嵌入於 card 時：拿掉自帶 elevation 陰影
-.v-date-picker.confucian-date-picker--embedded {
-	box-shadow: none;
+.v-date-picker {
+	// 底下這些使得 DatePicker 可以擠下稍微小一點的空間
+	max-width: 100%;
 
-	.v-date-picker-month,
-	.v-date-picker-years,
-	.v-date-picker-months {
-		padding-inline: 0;
+	.v-date-picker-controls {
+		max-width: 100%;
+
+		.v-btn {
+			padding-left: unset;
+			padding-right: unset;
+			padding-inline: min(12px, 4%);
+		}
+	}
+
+	.v-date-picker-month {
+		padding-left: calc(50% - 152px);
+	}
+
+	.v-date-picker-month__day {
+		width: unset;
+	}
+
+	// DatePicker 嵌入於 card 時：拿掉自帶 elevation 陰影
+	&.confucian-date-picker--embedded {
+		box-shadow: none;
+
+		.v-date-picker-month,
+		.v-date-picker-years,
+		.v-date-picker-months {
+			padding-inline: 0;
+		}
 	}
 }
