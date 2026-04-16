@@ -8,7 +8,7 @@
 // 這條路徑對應 package.json 的 exports "./components.css"
 @use "../../dist/components.css";
 
-@use "variables";
+@use "variables" as v;
 @use "mixins" as m;
 @use "typography";
 @use "bamboo-divider";
@@ -21,11 +21,12 @@
 // 透過 Vuetify 4 原生 CSS variable：--v-font-body（內文）、--v-font-heading（標題）
 // 這樣 text-display-* / text-headline-* / text-title-* 等 typography utility 自動吃到襯線
 // 字體可透過切換 html.is-serif 一鍵比較內文 sans/serif
+//
+// SSOT：字型堆疊定義於 _variables.scss 的 $font-family-serif / $font-family-sans，
+// 消費者可在 @use 前以同名變數覆寫
 :root {
-	--v-font-body:
-		system-ui, -apple-system, "Segoe UI", "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
-	--v-font-heading:
-		"Noto Serif TC", "Source Han Serif TC", "PingFang TC", "Songti TC", "Microsoft JhengHei", Georgia, serif;
+	--v-font-body: #{v.$font-family-sans};
+	--v-font-heading: #{v.$font-family-serif};
 }
 
 // 在 root 設 color-scheme，讓瀏覽器原生 UI（捲軸、表單元件、autofill 等）跟隨主題

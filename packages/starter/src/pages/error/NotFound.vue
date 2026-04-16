@@ -18,7 +18,7 @@
 
 <style scoped>
 	.error-code {
-		font-family: "Noto Serif TC", "Source Han Serif TC", Georgia, serif;
+		font-family: var(--v-font-heading);
 		font-size: 8rem;
 		line-height: 1;
 		font-weight: 600;

@@ -38,14 +38,19 @@ $bamboo-divider-node-color: rgba(139, 117, 96, 0.6) !default;
 $bamboo-divider-node-color-dark: rgba(200, 190, 172, 0.4) !default;
 
 // === 字體 ===
+// 襯線（標題用）。順序：
+//   Web 命名（Noto Serif TC）→ Android/Linux 的 CJK family name → macOS/iOS → Windows → 拉丁 fallback
 $font-family-serif:
 	"Noto Serif TC",
+	"Noto Serif CJK TC",
 	"Source Han Serif TC",
 	"PingFang TC",
+	"Songti TC",
 	"Microsoft JhengHei",
 	Georgia,
 	serif !default;
 
+// 無襯線（內文用）。走系統字型堆疊 + CJK fallback
 $font-family-sans:
 	system-ui,
 	-apple-system,
