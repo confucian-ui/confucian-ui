@@ -6,9 +6,8 @@
 			<v-col cols="12" md="6">
 				<v-card class="pa-6 h-100">
 					<div class="d-flex align-center mb-4">
-
 						<h3 class="text-title-large confucian-heading">
-							<v-icon icon="ph-book-open" size="32" color="primary" class="mr-3" />攤開的宣紙
+							<v-icon icon="ph-book-open" size="1.2em" color="primary" class="mr-3" style="vertical-align: -0.25em;" />攤開的宣紙
 						</h3>
 					</div>
 					<p class="text-body-medium text-medium-emphasis">
@@ -20,7 +19,7 @@
 				<v-card class="pa-6 h-100">
 					<div class="d-flex align-center mb-4">
 						<h3 class="text-title-large confucian-heading">
-							<v-icon icon="ph-moon-stars" size="32" color="primary" class="mr-3" />深夜的書齋
+							<v-icon icon="ph-moon-stars" size="1.2em" color="primary" class="mr-3" style="vertical-align: -0.25em;" />深夜的書齋
 						</h3>
 					</div>
 					<p class="text-body-medium text-medium-emphasis">
@@ -32,35 +31,39 @@
 
 		<v-card class="pa-6 mt-4">
 			<h3 class="text-title-large confucian-heading mb-4">設計理念</h3>
-			<v-list lines="two" density="comfortable" bg-color="transparent">
+			<v-list :lines="false" bg-color="transparent">
 				<v-list-item prepend-icon="ph-palette">
 					<v-list-item-title>色彩同源</v-list-item-title>
 					<v-list-item-subtitle>
 						primary 採竹黃褐（淺色 #C8833F、深色 #D9A877），深淺模式同色系保品牌一致
 					</v-list-item-subtitle>
 				</v-list-item>
+				<v-divider class="my-1 d-sm-none"/>
 				<v-list-item prepend-icon="ph-square">
 					<v-list-item-title>中庸圓角</v-list-item-title>
 					<v-list-item-subtitle>
 						微圓角，在方正與柔和之間取中庸
 					</v-list-item-subtitle>
 				</v-list-item>
-				<v-list-item prepend-icon="ph-circles-three">
+				<v-divider class="my-1 d-sm-none"/>
+				<v-list-item prepend-icon="ph-yin-yang">
 					<v-list-item-title>Duotone 圖示</v-list-item-title>
 					<v-list-item-subtitle>
 						Phosphor duotone 在純線與純填之間取雙層次，呼應「過猶不及」
 					</v-list-item-subtitle>
 				</v-list-item>
-				<v-list-item prepend-icon="ph-stack">
+				<v-divider class="my-1 d-sm-none"/>
+				<v-list-item prepend-icon="ph-wave-square">
 					<v-list-item-title>回字紋卡片</v-list-item-title>
 					<v-list-item-subtitle>
-						&lt;v-card&gt; 四角以 SVG mask 繪製回字紋裝飾，隨邊框色同步
+						&lt;v-card&gt; 四角以 SVG mask 繪製隨邊框色同步的回字紋裝飾，象徵傳承
 					</v-list-item-subtitle>
 				</v-list-item>
-				<v-list-item prepend-icon="ph-wind">
-					<v-list-item-title>紙質紋路</v-list-item-title>
+				<v-divider class="my-1 d-sm-none"/>
+				<v-list-item prepend-icon="ph-waves">
+					<v-list-item-title>背景紋路</v-list-item-title>
 					<v-list-item-subtitle>
-						SVG feTurbulence 做雜訊顆粒，淺色走深褐 multiply、深色走淡白 screen
+						利用 SVG feTurbulence 做出紙質和木紋紋路
 					</v-list-item-subtitle>
 				</v-list-item>
 			</v-list>
