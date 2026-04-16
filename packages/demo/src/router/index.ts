@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 import DefaultLayout from "../layouts/DefaultLayout.vue";
 import BlankLayout from "../layouts/BlankLayout.vue";
@@ -157,7 +157,8 @@ const routes: RouteRecordRaw[] = [
 ];
 
 export const router = createRouter({
-	history: createWebHistory(import.meta.env.BASE_URL),
+	// GitHub Pages 靜態託管無 SPA fallback，改用 hash history 避免 refresh 404
+	history: createWebHashHistory(import.meta.env.BASE_URL),
 	routes,
 	scrollBehavior() {
 		return { top: 0 };
