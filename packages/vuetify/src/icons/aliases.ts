@@ -44,9 +44,10 @@ export const phosphorAliases: Record<string, string> = {
 	"checkboxIndeterminate": "ph-minus-square",
 	"radioOn": "ph-check-circle",
 	"radioOff": "ph-circle",
-	"ratingEmpty": "ph-star",
-	"ratingFull": "ph-star",
-	"ratingHalf": "ph-star",
+	// Rating：empty 走線稿、full 走實心、half 走半填，三態視覺差異明顯
+	"ratingEmpty": "ph-star-regular",
+	"ratingFull": "ph-star-fill",
+	"ratingHalf": "ph-star-half-fill",
 
 	// 常用動作
 	"menu": "ph-list",
