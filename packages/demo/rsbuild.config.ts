@@ -47,6 +47,7 @@ export default defineConfig({
 		favicon: "./src/assets/logo.svg",
 	},
 	server: {
+		host: "::",
 		port: 5173,
 	},
 });
