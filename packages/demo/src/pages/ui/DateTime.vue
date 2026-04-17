@@ -5,22 +5,29 @@
 		<v-row>
 			<v-col cols="12" md="6">
 				<v-card class="pa-6">
-					<h3 class="text-title-large mb-4">日期輸入欄</h3>
+					<h3 class="text-title-large mb-4">原生日期輸入欄</h3>
 					<p class="text-body-medium text-medium-emphasis mb-4">
-						搭配 prepend-icon 的簡單日期輸入欄。
+						搭配 prepend-icon 的簡單日期輸入欄，此時圖示會取代 indicator 的功能。
 					</p>
-					<v-text-field
-						v-model="singleDate"
-						label="出生日期"
-						type="date"
-						prepend-inner-icon="$calendar"
-					/>
-					<v-text-field
-						v-model="singleTime"
-						label="提醒時間"
-						type="time"
-						prepend-inner-icon="$confucian-clock"
-					/>
+					<v-row>
+						<v-col>
+							<v-text-field v-model="singleDate" label="出生日期" type="date" prepend-inner-icon="$calendar" />
+						</v-col>
+						<v-col>
+							<v-text-field v-model="singleTime" label="提醒時間" type="time" prepend-inner-icon="$confucian-clock" />
+						</v-col>
+					</v-row>
+					<p class="text-body-medium text-medium-emphasis mb-4">
+						沒有搭配 prepend-icon 的話，顯示原生的 indicator。
+					</p>
+					<v-row>
+						<v-col>
+							<v-text-field v-model="singleDate" label="出生日期" type="date" />
+						</v-col>
+						<v-col>
+							<v-text-field v-model="singleTime" label="提醒時間" type="time" />
+						</v-col>
+					</v-row>
 				</v-card>
 			</v-col>
 
@@ -32,28 +39,13 @@
 					</p>
 					<v-row>
 						<v-col cols="6">
-							<v-text-field
-								v-model="rangeStart"
-								label="起始日"
-								type="date"
-								prepend-inner-icon="$calendar"
-							/>
+							<v-text-field v-model="rangeStart" label="起始日" type="date" prepend-inner-icon="$calendar" />
 						</v-col>
 						<v-col cols="6">
-							<v-text-field
-								v-model="rangeEnd"
-								label="結束日"
-								type="date"
-								prepend-inner-icon="$calendar"
-							/>
+							<v-text-field v-model="rangeEnd" label="結束日" type="date" prepend-inner-icon="$calendar" />
 						</v-col>
 					</v-row>
-					<v-chip
-						v-if="rangeSummary"
-						color="primary"
-						variant="tonal"
-						size="small"
-					>
+					<v-chip v-if="rangeSummary" color="primary" variant="tonal" size="small">
 						{{ rangeSummary }}
 					</v-chip>
 				</v-card>
@@ -89,20 +81,10 @@
 					<v-dialog v-model="bookingOpen" max-width="360">
 						<v-card class="pa-4">
 							<h3 class="text-title-large confucian-heading mb-3">選擇預約時間</h3>
-							<v-date-picker
-								v-model="tempDate"
-								show-adjacent-months
-								color="primary"
-								hide-header
-								class="confucian-date-picker--embedded"
-							/>
-							<v-text-field
-								v-model="tempTime"
-								label="時段"
-								type="time"
-								class="mt-3"
-								prepend-inner-icon="$confucian-clock"
-							/>
+							<v-date-picker v-model="tempDate" show-adjacent-months color="primary" hide-header
+										   class="confucian-date-picker--embedded" />
+							<v-text-field v-model="tempTime" label="時段" type="time" class="mt-3"
+										  prepend-inner-icon="$confucian-clock" />
 							<div class="d-flex justify-end ga-2 mt-2">
 								<v-btn variant="text" @click="bookingOpen = false">取消</v-btn>
 								<v-btn color="primary" variant="flat" @click="confirmBooking">確認</v-btn>
@@ -118,11 +100,7 @@
 					<p class="text-body-medium text-medium-emphasis mb-4">
 						v-time-picker：類比鐘面式時間選擇，支援 12 / 24 小時制。
 					</p>
-					<v-time-picker
-						v-model="pickedTime"
-						format="24hr"
-						color="primary"
-					/>
+					<v-time-picker v-model="pickedTime" format="24hr" color="primary" />
 					<div class="mt-3 text-body-medium">
 						已選：<strong>{{ pickedTime || "無" }}</strong>
 					</div>
@@ -140,20 +118,9 @@
 					<p class="text-body-medium text-medium-emphasis mb-4">
 						v-date-input（labs）：輸入欄與行事曆 popup 一體；內建解析、驗證。
 					</p>
-					<v-date-input
-						v-model="dateInputValue"
-						label="活動日期"
-						prepend-icon=""
-						prepend-inner-icon="$calendar"
-					/>
-					<v-date-input
-						v-model="dateRangeValue"
-						label="日期區間"
-						multiple="range"
-						prepend-icon=""
-						prepend-inner-icon="$calendar"
-						class="mt-2"
-					/>
+					<v-date-input v-model="dateInputValue" label="活動日期" prepend-icon="" prepend-inner-icon="$calendar" />
+					<v-date-input v-model="dateRangeValue" label="日期區間" multiple="range" prepend-icon=""
+								  prepend-inner-icon="$calendar" class="mt-2" />
 				</v-card>
 			</v-col>
 
@@ -164,11 +131,7 @@
 						以相對時間（幾分鐘前 / 小時前）呈現的列表。
 					</p>
 					<v-list density="comfortable" bg-color="transparent">
-						<v-list-item
-							v-for="event in events"
-							:key="event.id"
-							:prepend-icon="event.icon"
-						>
+						<v-list-item v-for="event in events" :key="event.id" :prepend-icon="event.icon">
 							<v-list-item-title>{{ event.title }}</v-list-item-title>
 							<v-list-item-subtitle>
 								{{ event.time }} · {{ event.relative }}

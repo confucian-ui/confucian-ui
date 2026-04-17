@@ -7,6 +7,7 @@ import { zhHant, en } from "vuetify/locale";
 import { confucianBlueprint } from "./blueprint";
 import { confucianLight } from "./theme/light";
 import { confucianDark } from "./theme/dark";
+import { installNativePickerDelegate } from "./utils/nativePickerDelegate";
 
 import type { ThemeDefinition, VuetifyOptions } from "vuetify";
 import type { App, InjectionKey } from "vue";
@@ -157,6 +158,7 @@ export function createConfucian(opts: CreateConfucianOptions = {}) {
 		install(app: App) {
 			app.use(vuetify);
 			app.provide(CONFUCIAN_RUNTIME_KEY, runtime);
+			installNativePickerDelegate();
 		},
 	};
 }

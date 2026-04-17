@@ -10,7 +10,7 @@
 
 		<!-- KPI 卡片列 -->
 		<v-row>
-			<v-col v-for="kpi in kpis" :key="kpi.label" cols="12" sm="6" md="3">
+			<v-col v-for="kpi in kpis" :key="kpi.label" cols="6" md="3">
 				<v-card class="pa-4 confucian-card--emphasis">
 					<div class="d-flex align-center justify-space-between mb-2">
 						<span class="text-title-medium text-medium-emphasis">{{ kpi.label }}</span>

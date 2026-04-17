@@ -10,3 +10,8 @@
 .v-field--variant-outlined {
 	margin-top: 0.4rem;
 }
+
+// 淺色模式中，把焦點欄位的框線用 primary 顏色，比較不突兀
+.v-theme--confucianLight .v-field--focused .v-field__outline {
+	color: rgb(var(--v-theme-primary));
+}

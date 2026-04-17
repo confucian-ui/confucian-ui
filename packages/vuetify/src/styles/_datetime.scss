@@ -1,0 +1,84 @@
+// ── Vuetify DatePicker / TimePicker 元件微調 ──
+
+.v-date-picker {
+	// Vuetify 的 DatePicker 預設 min-width 過寬，擠不進窄空間
+	max-width: 100%;
+
+	.v-date-picker-controls {
+		max-width: 100%;
+
+		.v-btn {
+			padding-left: unset;
+			padding-right: unset;
+			padding-inline: min(12px, 4%);
+		}
+	}
+
+	.v-date-picker-month {
+		padding-left: calc(50% - 152px);
+		padding-right: calc(50% - 152px);
+	}
+
+	.v-date-picker-month__day {
+		width: unset;
+	}
+
+	// DatePicker 嵌入於 card 時：拿掉自帶 elevation 陰影
+	&.confucian-date-picker--embedded {
+		box-shadow: none;
+
+		.v-date-picker-month,
+		.v-date-picker-years,
+		.v-date-picker-months {
+			padding-inline: 0;
+		}
+	}
+}
+
+.v-time-picker.v-picker {
+	min-width: min(328px, 100%);
+}
+
+// ── 原生 date / time input 的 indicator 處理 ──
+//
+// 設計目標：
+//   - 有 prepend-inner-icon 時 → 隱藏原生 indicator，改由 icon 觸發 showPicker()
+//     （showPicker 的事件委派邏輯在 utils/nativePickerDelegate.ts，createConfucian 安裝）
+//   - 沒有 prepend-inner-icon 時 → 保留原生 indicator，使用者仍能點擊開啟 picker
+
+input[type="date"],
+input[type="time"] {
+	// Android Chrome 的原生箭頭不在 shadow DOM 內，而是 appearance 的副作用；
+	// 設 none 才能消除
+	appearance: none;
+
+	// 桌面版沒有 prepend-inner-icon 時，保留原生 indicator 並加上 pointer cursor
+	&::-webkit-calendar-picker-indicator {
+		cursor: pointer;
+	}
+
+	// 有 prepend-inner-icon 時（DOM 結構：.v-field__prepend-inner + .v-field__field > input）
+	// 隱藏原生 indicator，讓 icon 全權負責觸發 picker
+	.v-field__prepend-inner + .v-field__field & {
+		&::-webkit-calendar-picker-indicator {
+			display: none;
+		}
+
+		// 原生 indicator 隱藏後不需要預留右側 margin
+		&::-webkit-date-and-time-value {
+			margin: 1px 4px;
+		}
+	}
+
+	// 手機上不論有無 prepend-inner-icon，都沒有桌面版的 indicator，統一微調 margin
+	@media (max-width: 600px) {
+		&::-webkit-date-and-time-value {
+			margin: 1px 4px;
+		}
+	}
+}
+
+// 有 date/time input 的 field：prepend-inner 區域顯示為可點擊
+.v-input:has(input[type="date"], input[type="time"]) .v-field__prepend-inner {
+	cursor: pointer;
+}
