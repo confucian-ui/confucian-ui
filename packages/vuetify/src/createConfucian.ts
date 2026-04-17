@@ -1,13 +1,16 @@
 import { reactive, readonly, watch } from "vue";
 import { createVuetify } from "vuetify";
-import * as VuetifyComponents from "vuetify/components";
-import * as VuetifyDirectives from "vuetify/directives";
+import { Ripple } from "vuetify/directives";
 import { zhHant, en } from "vuetify/locale";
 
 import { confucianBlueprint } from "./blueprint";
 import { confucianLight } from "./theme/light";
 import { confucianDark } from "./theme/dark";
 import { installNativePickerDelegate } from "./utils/nativePickerDelegate";
+// 只 import library 自己的 SFC 用到的 Vuetify 元件與指令。
+// 不用 `import *`——那會把所有 Vuetify 元件拉進 library dist，消費端無法 tree-shake。
+// 消費端自己的 Vuetify 元件由 @confucian-ui/rsbuild-plugin（webpack-plugin-vuetify）auto-import。
+import * as ConfucianVuetifyComponents from "./vuetifyImports";
 
 import type { ThemeDefinition, VuetifyOptions } from "vuetify";
 import type { App, InjectionKey } from "vue";
@@ -128,8 +131,8 @@ export function createConfucian(opts: CreateConfucianOptions = {}) {
 	// 必須自行確保 VNavigationDrawer / VListGroup 等都被註冊
 	const vuetify = createVuetify({
 		blueprint: mergedBlueprint,
-		components: VuetifyComponents,
-		directives: VuetifyDirectives,
+		components: ConfucianVuetifyComponents,
+		directives: { Ripple },
 		theme: {
 			...mergedBlueprint.theme,
 			defaultTheme: initialThemeName,

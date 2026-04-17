@@ -85,7 +85,7 @@
 
 	import bambooForestUrl from "../../assets/bamboo-forest.jpg";
 
-	import type { VCalendar } from "vuetify/components";
+	import type { VCalendar } from "vuetify/components/VCalendar";
 
 	const slides = [
 		{
