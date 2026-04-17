@@ -30,13 +30,10 @@ export {
 	ConfucianLogo,
 	ConfucianThemeToggle,
 	ConfucianUserMenu,
-	ConfucianBreadcrumb,
 	ConfucianPageHeader,
 	ConfucianBambooDivider,
 	ConfucianBackToTop
 } from "./components/index";
-export type { BreadcrumbItem } from "./components/index";
-
 export type {
 	MenuEntry,
 	MenuItem,

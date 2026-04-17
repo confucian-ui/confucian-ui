@@ -29,10 +29,6 @@
 			<template v-if="$slots.appbarAppend" #append>
 				<slot name="appbarAppend" />
 			</template>
-
-			<template v-if="$slots.userMenu" #user>
-				<slot name="userMenu" />
-			</template>
 		</ConfucianAppBar>
 
 		<v-main class="confucian-main" :class="{ 'confucian-main--with-back-to-top': showBackToTop }">

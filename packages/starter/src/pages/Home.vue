@@ -14,10 +14,10 @@
 					<ConfucianBambooDivider />
 
 					<div class="d-flex flex-wrap ga-2">
-						<v-btn color="primary" variant="flat" prepend-icon="ph-book-open">
+						<v-btn color="primary" variant="flat" prepend-icon="ph-book-open" href="https://confucian-ui.github.io" target="_blank">
 							閱讀文件
 						</v-btn>
-						<v-btn variant="outlined" prepend-icon="ph-github-logo">
+						<v-btn variant="outlined" prepend-icon="ph-github-logo" href="https://www.github.com/confucian-ui/confucian-ui" target="_blank">
 							查看原始碼
 						</v-btn>
 					</div>

@@ -82,9 +82,9 @@
 						<v-card class="pa-4">
 							<h3 class="text-title-large confucian-heading mb-3">選擇預約時間</h3>
 							<v-date-picker v-model="tempDate" show-adjacent-months color="primary" hide-header
-										   class="confucian-date-picker--embedded" />
+								class="confucian-date-picker--embedded" />
 							<v-text-field v-model="tempTime" label="時段" type="time" class="mt-3"
-										  prepend-inner-icon="$confucian-clock" />
+								prepend-inner-icon="$confucian-clock" />
 							<div class="d-flex justify-end ga-2 mt-2">
 								<v-btn variant="text" @click="bookingOpen = false">取消</v-btn>
 								<v-btn color="primary" variant="flat" @click="confirmBooking">確認</v-btn>
@@ -120,7 +120,7 @@
 					</p>
 					<v-date-input v-model="dateInputValue" label="活動日期" prepend-icon="" prepend-inner-icon="$calendar" />
 					<v-date-input v-model="dateRangeValue" label="日期區間" multiple="range" prepend-icon=""
-								  prepend-inner-icon="$calendar" class="mt-2" />
+						prepend-inner-icon="$calendar" class="mt-2" />
 				</v-card>
 			</v-col>
 

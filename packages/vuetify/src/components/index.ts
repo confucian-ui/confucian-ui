@@ -6,8 +6,6 @@ export { default as ConfucianFooter } from "./common/ConfucianFooter.vue";
 export { default as ConfucianLogo } from "./common/ConfucianLogo.vue";
 export { default as ConfucianThemeToggle } from "./common/ConfucianThemeToggle.vue";
 export { default as ConfucianUserMenu } from "./common/ConfucianUserMenu.vue";
-export { default as ConfucianBreadcrumb } from "./common/ConfucianBreadcrumb.vue";
-export type { BreadcrumbItem } from "./common/ConfucianBreadcrumb.vue";
 export { default as ConfucianPageHeader } from "./common/ConfucianPageHeader.vue";
 export { default as ConfucianBambooDivider } from "./common/ConfucianBambooDivider.vue";
 export { default as ConfucianBackToTop } from "./common/ConfucianBackToTop.vue";

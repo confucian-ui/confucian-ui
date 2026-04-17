@@ -1,16 +1,11 @@
 <template>
-	<v-app-bar
-		class="confucian-app-bar"
-		:height="height"
-		:density="density"
-		flat
-	>
-		<v-btn
-			variant="text"
-			icon="$menu"
-			:aria-label="sidebarToggleLabel"
-			@click="emit('toggle-sidebar')"
-		/>
+	<!-- Slots:
+	     - prepend: 漢堡按鈕之後、主內容之前（breadcrumb 適合放這）
+	     - default: 中間主內容區
+	     - append:  右側區域；預設含 ThemeToggle + UserMenu，
+	                覆寫後需自行放入想要的元件（見 starter 的 DefaultLayout 範例） -->
+	<v-app-bar class="confucian-app-bar" :height="height" :density="density" flat>
+		<v-btn variant="text" icon="$menu" :aria-label="sidebarToggleLabel" @click="emit('toggle-sidebar')" />
 
 		<slot name="prepend" />
 
@@ -22,9 +17,7 @@
 
 		<slot name="append">
 			<ConfucianThemeToggle />
-			<slot name="user">
-				<ConfucianUserMenu />
-			</slot>
+			<ConfucianUserMenu />
 		</slot>
 	</v-app-bar>
 </template>

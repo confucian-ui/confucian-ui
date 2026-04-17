@@ -11,7 +11,7 @@
 		<!-- KPI 卡片列 -->
 		<v-row>
 			<v-col v-for="kpi in kpis" :key="kpi.label" cols="6" md="3">
-				<v-card class="pa-4 confucian-card--emphasis">
+				<v-card class="pa-4 confucian-card--emphasis h-100">
 					<div class="d-flex align-center justify-space-between mb-2">
 						<span class="text-title-medium text-medium-emphasis">{{ kpi.label }}</span>
 						<v-icon :icon="kpi.icon" :color="kpi.color" />
@@ -85,8 +85,9 @@
 	import { useTheme } from "vuetify";
 	import { ConfucianPageHeader, useApexDefaults } from "@confucian-ui/vuetify";
 
-	import type { ApexOptions } from "apexcharts";
 	import { deepMerge } from "@/utils/deepMerge";
+
+	import type { ApexOptions } from "apexcharts";
 
 	const apexchart = VueApexCharts;
 	const theme = useTheme();

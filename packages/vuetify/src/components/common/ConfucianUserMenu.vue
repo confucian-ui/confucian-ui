@@ -15,6 +15,10 @@
 			</v-btn>
 		</template>
 
+		<!-- Slots:
+		     - header: 選單頂部（使用者名片、帳號資訊等），有內容時自動加分隔線
+		     - default: 選單項目列表；預設含「個人資料」+「登出」，
+		               覆寫後完全自訂（見 starter 的 DefaultLayout 範例） -->
 		<v-list min-width="220" density="comfortable">
 			<v-list-item v-if="$slots.header" class="confucian-user-menu__header">
 				<slot name="header" />
@@ -22,14 +26,11 @@
 
 			<v-divider v-if="$slots.header" />
 
-			<slot name="items">
+			<slot>
 				<v-list-item :to="profileTo" prepend-icon="$edit">
 					<v-list-item-title>個人資料</v-list-item-title>
 				</v-list-item>
-				<v-list-item @click="emit('logout')">
-					<template #prepend>
-						<v-icon icon="ph-sign-out" />
-					</template>
+				<v-list-item @click="emit('logout')" prepend-icon="ph-sign-out">
 					<v-list-item-title>登出</v-list-item-title>
 				</v-list-item>
 			</slot>

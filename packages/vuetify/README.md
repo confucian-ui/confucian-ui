@@ -63,7 +63,6 @@ import {
 	ConfucianLogo,
 	ConfucianThemeToggle,
 	ConfucianUserMenu,
-	ConfucianBreadcrumb,
 	ConfucianPageHeader,
 	ConfucianBambooDivider,
 } from "@confucian-ui/vuetify";
