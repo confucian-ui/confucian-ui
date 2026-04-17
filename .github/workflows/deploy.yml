@@ -30,6 +30,9 @@ jobs:
       - name: Build @confucian-ui/vuetify
         run: pnpm --filter @confucian-ui/vuetify build
 
+      - name: Build @confucian-ui/rsbuild-plugin
+        run: pnpm --filter @confucian-ui/rsbuild-plugin build
+
       - name: Build demo
         run: pnpm --filter confucian-demo build
 

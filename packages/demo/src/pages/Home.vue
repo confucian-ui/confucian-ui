@@ -35,35 +35,35 @@
 				<v-list-item prepend-icon="ph-palette">
 					<v-list-item-title>色彩同源</v-list-item-title>
 					<v-list-item-subtitle>
-						primary 採竹黃褐（淺色 #C8833F、深色 #D9A877），深淺模式同色系保品牌一致
+						primary 採竹黃褐（淺色 #C8833F、深色 #D9A877），深淺模式同色系保品牌一致。
 					</v-list-item-subtitle>
 				</v-list-item>
 				<v-divider class="my-1 d-sm-none"/>
 				<v-list-item prepend-icon="ph-square">
 					<v-list-item-title>中庸圓角</v-list-item-title>
 					<v-list-item-subtitle>
-						微圓角，在方正與柔和之間取中庸
+						微圓角，在方正與柔和之間取中庸。
 					</v-list-item-subtitle>
 				</v-list-item>
 				<v-divider class="my-1 d-sm-none"/>
 				<v-list-item prepend-icon="ph-yin-yang">
 					<v-list-item-title>Duotone 圖示</v-list-item-title>
 					<v-list-item-subtitle>
-						Phosphor duotone 在純線與純填之間取雙層次，呼應「過猶不及」
+						Phosphor duotone 在純線與純填之間取雙層次，呼應「過猶不及」。附有專用 Rsbuild plugin 進行 treeshaking。
 					</v-list-item-subtitle>
 				</v-list-item>
 				<v-divider class="my-1 d-sm-none"/>
 				<v-list-item prepend-icon="ph-wave-square">
 					<v-list-item-title>回字紋卡片</v-list-item-title>
 					<v-list-item-subtitle>
-						&lt;v-card&gt; 四角以 SVG mask 繪製隨邊框色同步的回字紋裝飾，象徵傳承
+						&lt;v-card&gt; 四角以 SVG mask 繪製隨邊框色同步的回字紋裝飾，象徵傳承。
 					</v-list-item-subtitle>
 				</v-list-item>
 				<v-divider class="my-1 d-sm-none"/>
 				<v-list-item prepend-icon="ph-waves">
 					<v-list-item-title>背景紋路</v-list-item-title>
 					<v-list-item-subtitle>
-						利用 SVG feTurbulence 做出紙質和木紋紋路
+						利用 SVG feTurbulence 做出紙質和木紋紋路。
 					</v-list-item-subtitle>
 				</v-list-item>
 			</v-list>

@@ -3,9 +3,8 @@
 // 核心套件本身會使用某些 icon（見下方 import 清單），這些在此 module
 // 載入時就註冊到 phosphorSet 的 registry 裡，不依賴消費端 loader。
 //
-// 消費端的 Rspack loader（見 scripts/phosphor-treeshake-loader.mjs）
-// 會掃描消費端原始碼、為每個用到的 icon 自動注入額外的 register 呼叫，
-// 確保整個應用的 icon 都被正確打包與註冊。
+// 消費端的 icon 則由 @confucian-ui/rsbuild-plugin 的 Phosphor loader
+// 掃描原始碼、自動注入對應的 register 呼叫，確保整個應用的 icon 都被正確打包。
 //
 // 新增 icon 到 aliases.ts 或 Confucian* 元件後，需回來此檔同步加上 import + register
 

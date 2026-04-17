@@ -8,9 +8,9 @@ type PhWeight = "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
 const WEIGHTS = new Set<string>(["thin", "light", "regular", "bold", "fill", "duotone"]);
 
 // Icon 元件註冊表：key 為 PascalCase 元件名（如 "PhHouse"）。
-// 不再用 `import * as` 把 1500+ 個元件全部拉進 bundle——改成由使用端註冊，
-// 消費端的 Rspack loader 會掃描原始碼、自動注入用到的 icon 的 register 呼叫。
-// Library 內部用到的 icon 由下方在 module 載入時一次註冊。
+// 不再用 `import * as` 把 1500+ 個元件全部拉進 bundle——改成由使用端註冊。
+// Library 內部用到的 icon 由 libraryIcons.ts 預先註冊；
+// 消費端的 icon 由 @confucian-ui/rsbuild-plugin 的 loader 掃描原始碼自動注入。
 const registry = new Map<string, Component>();
 
 export function registerPhosphorIcon(componentName: string, component: Component): void {
