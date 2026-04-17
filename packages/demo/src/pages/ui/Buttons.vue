@@ -50,10 +50,45 @@
 					</div>
 				</v-card>
 			</v-col>
+			<v-col cols="12" md="6">
+				<v-card class="pa-6">
+					<h3 class="text-title-large mb-4">切換按鈕群組</h3>
+					<p class="text-body-medium text-medium-emphasis mb-4">
+						v-btn-toggle：單選、多選、強制選取等模式。
+					</p>
+					<div class="text-body-small mb-1">單選（mandatory）</div>
+					<v-btn-toggle v-model="alignment" mandatory color="primary" variant="outlined" density="comfortable" class="mb-4">
+						<v-btn value="left" icon="ph-text-align-left" />
+						<v-btn value="center" icon="ph-text-align-center" />
+						<v-btn value="right" icon="ph-text-align-right" />
+						<v-btn value="justify" icon="ph-text-align-justify" />
+					</v-btn-toggle>
+
+					<div class="text-body-small mb-1">多選</div>
+					<v-btn-toggle v-model="formatting" multiple color="secondary" variant="outlined" density="comfortable" class="mb-4">
+						<v-btn value="bold" icon="ph-text-bolder" />
+						<v-btn value="italic" icon="ph-text-italic" />
+						<v-btn value="underline" icon="ph-text-underline" />
+						<v-btn value="strikethrough" icon="ph-text-strikethrough" />
+					</v-btn-toggle>
+
+					<div class="text-body-small mb-1">文字按鈕群組</div>
+					<v-btn-toggle v-model="view" mandatory color="primary" variant="outlined" density="comfortable">
+						<v-btn value="list">列表</v-btn>
+						<v-btn value="grid">格狀</v-btn>
+						<v-btn value="table">表格</v-btn>
+					</v-btn-toggle>
+				</v-card>
+			</v-col>
 		</v-row>
 	</div>
 </template>
 
 <script setup lang="ts">
+	import { ref } from "vue";
 	import { ConfucianPageHeader, ConfucianBambooDivider } from "@confucian-ui/vuetify";
+
+	const alignment = ref("left");
+	const formatting = ref(["bold"]);
+	const view = ref("list");
 </script>

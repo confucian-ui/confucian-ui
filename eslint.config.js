@@ -24,4 +24,10 @@ export default defineConfig([
 			"@typescript-eslint/no-magic-numbers": "off",
 		},
 	},
+	{
+		files: ["**/package.json"],
+		rules: {
+			"package-json/specify-peers-locally": "off",
+		},
+	},
 ]);

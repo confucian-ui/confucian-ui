@@ -157,6 +157,19 @@ p {
 	letter-spacing: 0.02em;
 }
 
+// 展開/收合箭頭旋轉：Vuetify 原本用「換圖」切 $expand / $collapse，無動畫。
+// 我們把兩個 alias 都指向 ph-caret-down，靠 CSS rotate 做 180 度翻轉過場。
+// timing 對齊 Vuetify 其他元件（VSelect 等）的 standard-easing。
+// 統一處理 v-expansion-panel 與 v-list-group（sidebar、treeview 等）
+.v-expansion-panel-title__icon .v-icon,
+.v-list-group__header .v-list-item__append .v-icon {
+	transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.v-expansion-panel-title--active .v-expansion-panel-title__icon .v-icon,
+.v-list-group--open > .v-list-group__header .v-list-item__append .v-icon {
+	transform: rotate(180deg);
+}
+
 // Stepper：預設的 elevation 陰影在 card 內顯得雜亂，我們把它壓掉
 // Vuetify 4 給 .v-stepper 與 .v-stepper-header 都套了 elevation-4，這裡一併清除
 .v-stepper,

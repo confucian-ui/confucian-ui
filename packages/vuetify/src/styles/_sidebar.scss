@@ -100,16 +100,6 @@ $item-weight: 600; // 君子不重則不威
 		}
 	}
 
-	// v-list-group 的展開/收合箭頭：Vuetify 原本是用「換圖」切換 $expand / $collapse，
-	// 無動畫過場。我們把兩個 alias 都設成 caret-down，靠 CSS rotate 做 180 度翻轉過場。
-	// timing 對齊 Vuetify 其他元件（VSelect 等）的 standard-easing
-	.v-list-group__header .v-list-item__append .v-icon {
-		transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-	}
-	.v-list-group--open > .v-list-group__header .v-list-item__append .v-icon {
-		transform: rotate(180deg);
-	}
-
 	.v-list-subheader {
 		color: rgb(var(--v-theme-sidebar-fg-muted));
 		font-size: 0.7rem;

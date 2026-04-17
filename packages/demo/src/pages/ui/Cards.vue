@@ -15,15 +15,9 @@
 
 			<v-col cols="12" md="4">
 				<v-card>
-					<v-img height="160" gradient="to bottom, rgb(200,131,63), rgb(107,83,68)">
-						<div class="d-flex align-center justify-center fill-height">
-							<h3 class="text-headline-small text-white confucian-heading">有圖媒體</h3>
-						</div>
-					</v-img>
+					<v-img :src="imgUrl" />
 					<v-card-text>
-						<p class="text-body-medium">
-							頂部以色彩漸層取代圖片，避免引入任何第三方圖像資產。
-						</p>
+						圖片卡片
 					</v-card-text>
 					<v-card-actions>
 						<v-btn variant="text" color="primary">動作</v-btn>
@@ -82,5 +76,6 @@
 <script setup lang="ts">
 	import { ConfucianPageHeader, ConfucianBambooDivider } from "@confucian-ui/vuetify";
 
+	import imgUrl from "../../assets/pexels-zhangkaiyv-6952102.jpg";
 	import LikeButton from "../../components/LikeButton.vue";
 </script>

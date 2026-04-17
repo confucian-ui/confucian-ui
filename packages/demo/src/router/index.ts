@@ -77,6 +77,24 @@ const routes: RouteRecordRaw[] = [
 				meta: { title: "日期時間" },
 			},
 			{
+				path: "ui/panels",
+				name: "ui-panels",
+				component: () => import("../pages/ui/Panels.vue"),
+				meta: { title: "面板與樹狀" },
+			},
+			{
+				path: "ui/feedback",
+				name: "ui-feedback",
+				component: () => import("../pages/ui/Feedback.vue"),
+				meta: { title: "回饋與載入" },
+			},
+			{
+				path: "ui/media",
+				name: "ui-media",
+				component: () => import("../pages/ui/Media.vue"),
+				meta: { title: "媒體與展示" },
+			},
+			{
 				path: "charts",
 				name: "charts",
 				component: () => import("../pages/charts/ApexCharts.vue"),
