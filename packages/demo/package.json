@@ -21,5 +21,8 @@
 		"vue-router": "^5.0.4",
 		"vue3-apexcharts": "^1.11.1",
 		"vuetify": "^4.0.5"
+	},
+	"devDependencies": {
+		"@confucian-ui/rsbuild-plugin": "workspace:*"
 	}
 }

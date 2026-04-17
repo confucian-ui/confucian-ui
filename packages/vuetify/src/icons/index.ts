@@ -1,2 +1,2 @@
 export { phosphorAliases } from "./aliases";
-export { phosphorIconSet } from "./phosphorSet";
+export { phosphorIconSet, registerPhosphorIcon } from "./phosphorSet";

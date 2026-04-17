@@ -2,6 +2,8 @@ import { confucianLight } from "./theme/light";
 import { confucianDark } from "./theme/dark";
 import { phosphorAliases } from "./icons/aliases";
 import { phosphorIconSet } from "./icons/phosphorSet";
+// side-effect：在 library 模組載入時預先註冊自己用到的 Phosphor icon
+import "./icons/libraryIcons";
 
 import type { Blueprint, IconAliases } from "vuetify";
 

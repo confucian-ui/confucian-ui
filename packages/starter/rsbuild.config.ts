@@ -1,7 +1,7 @@
 import { defineConfig } from "@rsbuild/core";
 import { pluginVue } from "@rsbuild/plugin-vue";
 import { pluginSass } from "@rsbuild/plugin-sass";
-import { VuetifyPlugin } from "webpack-plugin-vuetify";
+import { pluginConfucian } from "@confucian-ui/rsbuild-plugin";
 
 export default defineConfig({
 	plugins: [
@@ -12,14 +12,8 @@ export default defineConfig({
 				additionalData: "@use \"@confucian-ui/vuetify/styles/variables\" as confucian;\n",
 			},
 		}),
+		pluginConfucian(),
 	],
-	tools: {
-		rspack: (_, { appendPlugins }) => {
-			appendPlugins(new VuetifyPlugin({
-				autoImport: true,
-			}));
-		},
-	},
 	source: {
 		entry: {
 			index: "./src/main.ts",

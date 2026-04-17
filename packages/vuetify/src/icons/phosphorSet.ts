@@ -1,5 +1,4 @@
 import { h } from "vue";
-import * as PhosphorIcons from "@phosphor-icons/vue";
 
 import type { IconSet, IconProps } from "vuetify";
 import type { Component } from "vue";
@@ -8,10 +7,20 @@ import type { Component } from "vue";
 type PhWeight = "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
 const WEIGHTS = new Set<string>(["thin", "light", "regular", "bold", "fill", "duotone"]);
 
+// Icon 元件註冊表：key 為 PascalCase 元件名（如 "PhHouse"）。
+// 不再用 `import * as` 把 1500+ 個元件全部拉進 bundle——改成由使用端註冊，
+// 消費端的 Rspack loader 會掃描原始碼、自動注入用到的 icon 的 register 呼叫。
+// Library 內部用到的 icon 由下方在 module 載入時一次註冊。
+const registry = new Map<string, Component>();
+
+export function registerPhosphorIcon(componentName: string, component: Component): void {
+	registry.set(componentName, component);
+}
+
 interface IconComponent {
 	component: Component;
 	weight: PhWeight;
-};
+}
 
 // 將 icon 名解析為 Phosphor 元件 + weight。支援以下輸入格式：
 //   "ph-house"              → PhHouse, weight="duotone"（預設）
@@ -29,7 +38,7 @@ function resolvePhosphorIcon(name: string): IconComponent | undefined {
 		base = base.slice("ph-".length);
 	}
 	// 若以其它命名空間前綴，不處理
-	if(/^[a-z]+-/.test(base) && base.startsWith("mdi-")) {
+	if(base.startsWith("mdi-")) {
 		return undefined;
 	}
 
@@ -51,8 +60,7 @@ function resolvePhosphorIcon(name: string): IconComponent | undefined {
 			.map(part => part.charAt(0).toUpperCase() + part.slice(1))
 			.join("");
 
-	const registry = PhosphorIcons as unknown as Record<string, Component>;
-	const component = registry[normalized];
+	const component = registry.get(normalized);
 	if(!component) return undefined;
 	return { component, weight };
 }

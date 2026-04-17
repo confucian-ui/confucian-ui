@@ -11,7 +11,7 @@ export { confucianBlueprint } from "./blueprint";
 export { tokens, confucianLight, confucianDark } from "./theme/index";
 export type { ConfucianTokens } from "./theme/index";
 
-export { phosphorAliases, phosphorIconSet } from "./icons/index";
+export { phosphorAliases, phosphorIconSet, registerPhosphorIcon } from "./icons/index";
 
 export {
 	useConfucianTheme,

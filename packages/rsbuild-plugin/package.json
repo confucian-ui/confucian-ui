@@ -1,0 +1,46 @@
+{
+	"name": "@confucian-ui/rsbuild-plugin",
+	"version": "0.1.0",
+	"description": "Rsbuild plugin for Confucian UI — bundles webpack-plugin-vuetify auto-import + Phosphor Icons tree-shaking into one line.",
+	"type": "module",
+	"license": "PolyForm-Noncommercial-1.0.0",
+	"author": "Mu-Tsun Tsai <don.m.t.tsai@gmail.com> (https://github.com/MuTsunTsai)",
+	"repository": {
+		"type": "github",
+		"url": "https://www.github.com/confucian-ui/confucian-ui"
+	},
+	"keywords": [
+		"rsbuild",
+		"rspack",
+		"plugin",
+		"vuetify",
+		"phosphor",
+		"confucian",
+		"tree-shaking"
+	],
+	"sideEffects": false,
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/types/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "rslib build && tsc -p tsconfig.build.json",
+		"dev": "rslib build --watch",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"webpack-plugin-vuetify": "^3.1.3"
+	},
+	"peerDependencies": {
+		"@confucian-ui/vuetify": "^0.2.0",
+		"@phosphor-icons/vue": "^2.2.0",
+		"@rsbuild/core": "^1.0.0",
+		"@rspack/core": "^1.0.0",
+		"vuetify": "^4.0.0"
+	}
+}

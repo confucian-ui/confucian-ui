@@ -1,11 +1,14 @@
 import { defineConfig } from "@rsbuild/core";
 import { pluginVue } from "@rsbuild/plugin-vue";
 import { pluginSass } from "@rsbuild/plugin-sass";
-import { VuetifyPlugin } from "webpack-plugin-vuetify";
+import { pluginConfucian } from "@confucian-ui/rsbuild-plugin";
+import { RsdoctorRspackPlugin } from "@rsdoctor/rspack-plugin";
 
 // 部署到 GitHub Pages 時需要 base path（如 "/confucian-ui/"）；
 // 本地開發與 preview 維持 "/"。由 CI 設定 BASE_PATH 環境變數帶入
 const basePath = process.env.BASE_PATH ?? "/";
+
+const useRsdoctor = process.argv.includes("doctor");
 
 export default defineConfig({
 	plugins: [
@@ -16,12 +19,21 @@ export default defineConfig({
 				additionalData: "@use \"@confucian-ui/vuetify/styles/variables\" as confucian;\n",
 			},
 		}),
+		pluginConfucian(),
 	],
 	tools: {
 		rspack: (_, { appendPlugins }) => {
-			appendPlugins(new VuetifyPlugin({
-				autoImport: true,
-			}));
+			if(process.env.RSDOCTOR || useRsdoctor) {
+				appendPlugins(new RsdoctorRspackPlugin({
+					linter: {
+						rules: { "ecma-version-check": "off" },
+					},
+					supports: {
+						generateTileGraph: true,
+					},
+					port: 6060,
+				}));
+			}
 		},
 	},
 	source: {
