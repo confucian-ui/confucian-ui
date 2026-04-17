@@ -70,6 +70,7 @@
 						v-model="calendarDate"
 						:type="calendarView"
 						:events="calendarEvents"
+						event-name="title"
 						color="primary"
 					/>
 				</v-card>
@@ -116,29 +117,35 @@
 		if(isNaN(d.getTime())) return "";
 		return `${d.getFullYear()} 年 ${d.getMonth() + 1} 月`;
 	});
+	// 以當前日期為基準產生範例事件，確保任何時間開啟 demo 都看得到
+	function eventDate(dayOffset: number, hour: number): Date {
+		const now = new Date();
+		return new Date(now.getFullYear(), now.getMonth(), now.getDate() + dayOffset, hour);
+	}
+
 	const calendarEvents = ref([
 		{
 			title: "團隊週會",
-			start: new Date(2026, 3, 14, 10, 0),
-			end: new Date(2026, 3, 14, 11, 0),
+			start: eventDate(0, 10),
+			end: eventDate(0, 11),
 			color: "primary",
 		},
 		{
 			title: "產品評審",
-			start: new Date(2026, 3, 16, 14, 0),
-			end: new Date(2026, 3, 16, 16, 0),
+			start: eventDate(2, 14),
+			end: eventDate(2, 16),
 			color: "accent",
 		},
 		{
 			title: "版本發布",
-			start: new Date(2026, 3, 18, 9, 0),
-			end: new Date(2026, 3, 18, 10, 0),
+			start: eventDate(5, 9),
+			end: eventDate(5, 10),
 			color: "success",
 		},
 		{
 			title: "客戶拜訪",
-			start: new Date(2026, 3, 22, 13, 0),
-			end: new Date(2026, 3, 22, 15, 0),
+			start: eventDate(8, 13),
+			end: eventDate(8, 15),
 			color: "warning",
 		},
 	]);

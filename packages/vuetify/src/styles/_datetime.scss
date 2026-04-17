@@ -41,12 +41,15 @@
 
 // Vuetify 預設的圓形按鈕在中文介面上不好看
 // 這邊微調來達到比較好的視覺效果
-.v-calendar-weekly__day .v-icon-btn {
-	border-radius: 3px;
-	line-height: 1.2;
-	font-size: 90%;
-	width: 3.2em;
-	word-break: keep-all;
+.v-calendar-weekly__day,
+.v-calendar-daily_head-day-label {
+	.v-icon-btn {
+		border-radius: 3px;
+		line-height: 1.2;
+		font-size: 90%;
+		width: 3.2em;
+		word-break: keep-all;
+	}
 }
 
 // ── 原生 date / time input 的 indicator 處理 ──
