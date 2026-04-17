@@ -8,25 +8,25 @@
 
 ## Monorepo 結構
 
-本專案以 pnpm workspace 管理三個 package：
+本專案以 pnpm workspace 管理四個 package：
 
 | Package | 說明 | 發布狀態 |
 | --- | --- | --- |
 | [packages/vuetify](packages/vuetify/) — `@confucian-ui/vuetify` | Vuetify 4 版本：設定工具、共用元件、全域樣式 | 發布到 NPM |
+| [packages/rsbuild-plugin](packages/rsbuild-plugin/) — `@confucian-ui/rsbuild-plugin` | Rsbuild plugin：一行整合 Vuetify auto-import + Phosphor tree-shaking | 發布到 NPM |
 | [packages/demo](packages/demo/) — `confucian-demo` | 完整展示範本，包含各類頁面 | 私有 |
 | [packages/starter](packages/starter/) — `confucian-starter` | 乾淨起始範本，只含登入、錯誤、空白首頁 | 私有 |
 
-> 套件名稱 `@confucian-ui/vuetify` 而非 `confucian-ui/core`，是為了保留未來新增其他 UI 框架版本（如 `@confucian-ui/bootstrap`）的可能性。屆時若有共用層才會抽出 `@confucian-ui/core`。
+> 套件名稱 `@confucian-ui/vuetify` 而非 `core`，是為了預留未來其他 UI 框架版本（`@confucian-ui/bootstrap` 等）的空間。屆時若有共用層才會抽出 `@confucian-ui/core`。
 
 ## 技術堆疊
 
 - Vue 3.5 + Vuetify 4
-- Vue Router 4（手寫路由）
-- Rsbuild（demo / starter 的建置）
-- Rslib（`@confucian-ui/vuetify` 的 library 建置）
-- webpack-plugin-vuetify（Vuetify 自動匯入 + tree-shaking）
+- Vue Router 5（手寫路由）
+- Rsbuild（demo / starter 的建置）+ `@confucian-ui/rsbuild-plugin`（Vuetify auto-import + Phosphor tree-shaking）
+- Rslib（`@confucian-ui/vuetify` 與 `@confucian-ui/rsbuild-plugin` 的 library 建置）
 - Phosphor Icons（預設 duotone 變體）
-- TypeScript、ESM、tab 縮排
+- TypeScript 6、ESM、tab 縮排
 
 ## 快速開始
 
